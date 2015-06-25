@@ -14,8 +14,11 @@ public class Product {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
-    private String type;
+    private String title;
+    private String thumbnail;
+    private Long typeId;
+    private String typeName;
+    private String brief;
     private String content;
 
     public Long getId() {
@@ -26,20 +29,44 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getType() {
-        return type;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 
     public String getContent() {

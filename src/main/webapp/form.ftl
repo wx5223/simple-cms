@@ -97,16 +97,16 @@
 	<div class="container-fluid">
 		<div class="row">
 				<div class="col-md-10 col-xs-10">
-				<h3 class="page-title bottomLine">文章管理&nbsp;
+				<h3 class="page-title bottomLine">产品管理&nbsp;
 						<#if article?has_content>
-							<small>编辑文章</small>
+							<small>编辑产品</small>
 						<#else>
-							<small>添加文章</small>
+							<small>添加产品</small>
 						</#if>
 					</h3>
 				</div>
 			<div class="col-md-2 col-xs-2 white padding0 ">
-				<button class="btn btn-default pull-right" role="button" onclick="javascript:history.go(-1)">返回文章列表</button>
+				<button class="btn btn-default pull-right" role="button" onclick="javascript:history.go(-1)">返回产品列表</button>
 			</div>
 		</div>
 		<hr>
@@ -114,10 +114,10 @@
 			<form id="articleForm" class="form-horizontal" role="form" action="">
 				<!--网站标题-->
 				<div class="form-group">
-					<label class="col-md-2 control-label col-xs-3">文章标题:</label>
+					<label class="col-md-2 control-label col-xs-3">产品标题:</label>
 						<input type="hidden" class="form-control" name="basicId" id="articleID" value="<#--${article?c?default(0)}-->">
 					<div class="col-md-4  col-xs-6">
-						<input type="text" class="form-control" name="name" maxlength="30" data-toggle="popover"  placeholder="文章标题" data-placement="right" data-content="" value="">
+						<input type="text" class="form-control" name="title" maxlength="30" data-toggle="popover"  placeholder="产品标题" data-placement="right" data-content="" value="">
 					</div>
 					<label for="ArticleList" class="col-md-1 control-label col-xs-3">自定义顺序:</label>
 					<div class="col-md-1  col-xs-1">
@@ -126,7 +126,7 @@
 				</div>
 				<!--域名:-->
 				<div class="form-group">
-					<label class="col-md-2 control-label col-xs-3">文章属性:</label>
+					<label class="col-md-2 control-label col-xs-3">产品属性:</label>
 					<div class="col-sm-5 col-xs-7" id="typeArticle">
                         <label class="checkbox-inline">
                             <input type="checkbox" name="checkbox" value="123">345
@@ -147,18 +147,18 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label col-xs-3">缩略图:</label>
 					<div class="col-md-4 uploadImg  col-xs-6"><#--${article.basicThumbnails?default('')}-->
-							<@uploadImg path="/upload/article" inputName="basicThumbnails" size="1" filetype="" msg="文章缩略图" imgs="" maxSize="1"/>
+							<@uploadImg path="/upload/article" inputName="thumbnail" size="1" filetype="" msg="产品缩略图" imgs="" maxSize="1"/>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="col-md-2 control-label col-xs-3" >文章来源:</label>
+					<label class="col-md-2 control-label col-xs-3" >产品来源:</label>
 					<div class="col-md-3 col-xs-4">
-						<input type="text"  class="form-control" maxlength="300" placeholder="无文章来源" name="articleSource" data-toggle="popover" data-placement="right" data-content=""  value="">
+						<input type="text"  class="form-control" maxlength="300" placeholder="无产品来源" name="articleSource" data-toggle="popover" data-placement="right" data-content=""  value="">
 					</div>
-					<label class="col-md-2 control-label col-xs-3">文章作者:</label>
+					<label class="col-md-2 control-label col-xs-3">产品作者:</label>
 					<div class="col-md-3   col-xs-3">
-						<input type="text" class="form-control"  name="articleAuthor" placeholder="无文章作者" maxlength="12" data-toggle="popover" data-placement="right" data-content=""  value="">
+						<input type="text" class="form-control"  name="articleAuthor" placeholder="无产品作者" maxlength="12" data-toggle="popover" data-placement="right" data-content=""  value="">
 					</div>
 				</div>
 				
@@ -193,7 +193,7 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label col-xs-4">描述:</label>
 					<div class="col-md-6  col-xs-9">
-						<textarea class="form-control " rows="4" name="basicDescription" placeholder="文章的描述信息" data-toggle="popover" data-placement="right" data-content=""></textarea>
+						<textarea class="form-control " rows="4" name="basicDescription" placeholder="产品的描述信息" data-toggle="popover" data-placement="right" data-content=""></textarea>
 					</div>
 				</div>
 				
@@ -201,13 +201,13 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label col-xs-4">关键字:</label>
 					<div class="col-md-6  col-xs-9">
-						<textarea class="form-control" rows="4" name="articleKeyword" placeholder="文章的关键字" data-toggle="popover" data-placement="right" data-content=""></textarea>
+						<textarea class="form-control" rows="4" name="articleKeyword" placeholder="产品的关键字" data-toggle="popover" data-placement="right" data-content=""></textarea>
 					</div>
 				</div>
 				
 				<!--版权信息-->
 				<div class="form-group">
-					<label class="col-md-2 control-label col-xs-4">文章内容:</label>
+					<label class="col-md-2 control-label col-xs-4">产品内容:</label>
 					<div class="col-md-10  col-xs-9"><#--${article.articleContent?default('')}-->
 							<@smallUedit inputName="content" width="800"  height="400" content=""/>
 					</div>
@@ -220,7 +220,7 @@
 						 <#--<#if article.basicTitle?has_content>-->
 	    					<button type="button" class="btn btn-success" id="updateArticle">修改</button>
 	    				<#--<#else>-->
-							<button type="button" class="btn btn-success" id="saveArticle">保存</button>
+							<button type="submit" class="btn btn-success" id="saveArticle">保存</button>
 						<#--</#if>-->
 	    			</div>
 				</div>
@@ -229,67 +229,62 @@
 	</div>
 	
 	<script>
+        $(document).ready(function() {
+            $('form').bootstrapValidator({
+                submitHandler: function(validator, form, submitButton) {
+                    //$(form).data('bootstrapValidator').validate();
+                    /*$.post(form.attr('action'), form.serialize(), function(result) {
+                        if (result.valid == true || result.valid == 'true') {
+                            // You can reload the current location
+                            window.location.reload();
+
+                            // Or use Javascript to update your page, such as showing the account name
+                            // $('#welcome').html('Hello ' + result.username);
+                        } else {
+                            // The account is not found
+                            // Show the errors
+                            $('#errors').html('The account is not found').removeClass('hide');
+
+                            // Enable the submit buttons
+                            $('#loginForm').bootstrapValidator('disableSubmitButtons', false);
+                        }
+                    }, 'json');*/
+                    alert(1);
+                },
+                fields: {
+                    //产品标题
+                    title: {
+                        validators: {
+                            notEmpty: { message: '产品标题不能为空'},
+                            stringLength: {max: 50,message: '产品标题长度不超过50个字符'}
+                        }
+                    }
+                }
+            });
+        });
 		var setting;
 		function checkForm(id){
-				$(id).bootstrapValidator({
-			       	fields: {
-			       		//文章标题
-			            name: {
-			                validators: {
-			                    notEmpty: { message: '文章标题不能为空'},
-			                    stringLength: {min: 1,max: 12,message: '文章标题长度介于1-12个字符'}
-			                }
-			            },
-			            //自定义排序
-			            articleFreeOrder: {
-			                validators: {
-			                    digits: { message: '请输入数字'},
-			                    stringLength: {min: 1,max: 8,message: '昵称长度介于1-8个字符'}
-			                }
-			            },
-			            articleAuthor: {
-			                validators: {
-			                    stringLength: { max: 12,message: '作者名长度不能超过12个字符'}
-			                }
-			            },
-			            articleUrl: {
-			                validators: {
-			                    stringLength: {max: 100,message: '网址长度不能超过100个字符'}
-			                }
-			            },
-			            articleSource: {
-			                validators: {
-			                    stringLength: { max: 300,message: '文章来源长度不能超过300个字符'}
-			                }
-			            },
-			            articleType:{
-			            	validators: {
-			                    notEmpty: { message: '文章类型必须有'}
-			                }
-		            	}
-			        }
-		     	});
-			}
+		}
 		
 		$(function() {
 			
-			//文章属性
+			//产品属性
 			<#if article?has_content>
-			//文章标题
+			//产品标题
 			$("input[name='name']").val("${article.basicTitle?default('')}");
-			//文章自定义排序
+			//产品自定义排序
 			$("input[name='articleFreeOrder']").val(${article.articleFreeOrder?c?default(0)});
-			//文章来源
+			//产品来源
 			$("input[name='articleSource']").val("${article.articleSource?default('')}");
-			//文章作者
+			//产品作者
 			$("input[name='articleAuthor']").val("${article.articleAuthor?default('')}");
-			//文章跳转链接
+			//产品跳转链接
 			$("input[name='articleUrl']").val("${article.articleUrl?default("")}");
-			//文章所属栏目
+			//产品所属栏目
 			$("input[name='basicCategoryId']").val(${article.basicCategoryId?c?default(0)});
-			//文章描述
+			//产品描述
 			$("textarea[name='basicDescription']").html("${article.basicDescription?default('')}");
-			//文章关键字
+			//产品关键字
 			$("textarea[name='articleKeyword']").html("${article.articleKeyword?default('')}");
 			
 			var type="${article.articleType?default("")}";
@@ -349,7 +344,7 @@
 				var updateArticle = $("#articleForm").serialize();
 				var articleFreeOrder=$("input[name='articleFreeOrder']").val();
 				var basicCategoryId=$("input[name='basicCategoryId']").val();
-				//文章类型
+				//产品类型
 				var checkboxType="";
 				$("#typeArticle input[name='checkbox']").each(function(){
 					if($(this).is(":checked")){
@@ -371,12 +366,12 @@
 			});
 			
 			//保存表单
-			$("#saveArticle").click(function(){
+			/*$("#saveArticle1").click(function(){
 				//将表单序列化
 				var saveArticle = $("#articleForm").serialize();
 				var articleFreeOrder=$("input[name='articleFreeOrder']").val();
 				var basicCategoryId=$("input[name='basicCategoryId']").val();
-				//文章属性
+				//产品属性
 				var checkboxType="";
 				$("#typeArticle input[name='checkbox']").each(function(){
 					if($(this).is(":checked")){
@@ -391,13 +386,13 @@
 				   success: function(msg){
 				   		if(msg){
 				   			location.href=ctx+"/manager/cms/article/list.do";
-				   			alert("添加文章成功！");
+				   			alert("添加产品成功！");
 				   		}else{
 				   			alert("系统异常！")
 				   		}
 				   },
 				});
-			});
+			});*/
 		});
 	</script>
 </body>
