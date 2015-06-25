@@ -26,6 +26,16 @@ public class ProductController {
         return "/index";
     }
 
+    @RequestMapping("/products")
+    public String products() {
+        return "/products";
+    }
+
+    @RequestMapping("/product")
+    public String product() {
+        return "/product";
+    }
+
     @RequestMapping("/save")
     @ResponseBody
     public String save(Product product) {
