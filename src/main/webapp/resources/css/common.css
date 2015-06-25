@@ -1,0 +1,71 @@
+body {
+    padding-bottom: 20px;
+    background-color: #fafafa;
+    font-size: 14px;
+    line-height: 21px;
+}
+.header {
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.header, .marketing, .footer {
+    padding-right: 0;
+    padding-left: 0;
+}
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+}
+#navbar .nav>li>a {
+    color: #757575;
+    text-decoration: none;
+}
+#navbar .nav>li>a:hover {
+    color: #428bca;
+    text-decoration: none;
+    background-color: transparent;
+}
+.page-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #e5e5e5;
+}
+
+
+/*.container{margin:0;padding:0;width: 100%;}*/
+.row {margin-left:0;margin-right:0}
+.form-horizontal .form-group {margin-left: 0px;margin-right: 0px;}
+hr{margin-top:9px;margin-bottom:9px;padding:0;}
+
+em.required {
+    font-size: 16px;
+    color: #f00;
+    vertical-align: middle;
+}
+
+.link-style a:hover{color:#000;}
+.link-style a:visited{color:#000;}
+
+/*定格按钮*/
+.ms-fix-bottom,.ms-fix-top{
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    background: rgba(255,255,255,0.9) none repeat scroll !important;
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.ms-fix-bottom {
+    bottom: 0;
+}
+
+.ms-fix-top {
+    top: 0;
+}
+/*重写bootstrap的表单label样式*/
+.control-label{font-weight:normal;font-size:14px;}
