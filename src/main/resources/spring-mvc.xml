@@ -45,14 +45,14 @@
 	<!-- freemarker的配置 -->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="/" />
+		<property name="templateLoaderPath" value="/WEB-INF/ftl/" />
 		<property name="defaultEncoding" value="utf-8" />
 		<property name="freemarkerSettings">
 			<props>
 				<prop key="template_update_delay">1</prop>
 				<prop key="locale">zh_CN</prop>
-				<prop key="datetime_format">yyyy-MM-dd</prop>
-				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="datetime_format">yyyy年MM月dd日</prop>
+				<prop key="date_format">yyyy年MM月dd日</prop>
 				<prop key="number_format">#.##</prop>
 			    <!--<prop key="auto_import">/include/macro.ftl as ms</prop>-->
 			</props>

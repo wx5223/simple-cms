@@ -22,7 +22,11 @@
 <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <link href="http://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet"/>
 <script src="http://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/language/zh_CN.js"></script>
 <script src="http://cdn.bootcss.com/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+
+<script type="text/javascript" src="${ctx}/resources/jquery/zTree_v3/jquery.ztree.all-3.5.min.js"></script>
+<link rel="stylesheet" href="${ctx}/resources/jquery/zTree_v3/zTreeStyle.css" type="text/css">
 <#--<link rel="stylesheet" type="text/css" href="${ctx}/css/animate.css" media="all" />
 
 <link rel="stylesheet" type="text/css" href="${ctx}/js/mobile/iconfont.css"/>

@@ -1,9 +1,7 @@
 package com.shawnw.cms.module.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Shawn on 2015/6/1.
@@ -14,12 +12,17 @@ public class Product {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(length = 100)
     private String title;
     private String thumbnail;
     private Long typeId;
     private String typeName;
+    @Column(length = 1000)
     private String brief;
+    @Lob
     private String content;
+    private Date createTime;
+    private Date updateTime;
 
     public Long getId() {
         return id;
@@ -75,5 +78,21 @@ public class Product {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
