@@ -6,7 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-<!-- 新 Bootstrap 核心 CSS 文件 -->
+<!-- pace & custom cover -->
+<link rel="stylesheet" href="${ctx}/resources/pace/pace1.0.2_cover.css" />
+<link rel="stylesheet" href="http://cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" />
+<script type="text/javascript">
+    paceOptions = {
+        ajax: false, // disabled
+        document: true, // disabled
+        eventLag: false
+    };
+</script>
+<!-- <script src="http://cdn.bootcss.com/pace/1.0.2/pace.js"></script> -->
+<script src="${ctx}/resources/pace/pace1.0.2_cover.js"></script>
+<script>
+    Pace.on("done", function(){
+        $(".browser-screen-loading").hide();
+    });
+</script>
+
+<!-- Bootstrap -->
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
