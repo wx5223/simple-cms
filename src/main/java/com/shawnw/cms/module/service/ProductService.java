@@ -28,6 +28,14 @@ public class ProductService {
         return productTypeTreeList;
     }
 
+    public List<ProductTypeTree> getTreeList() {
+        if (productTypeTreeList == null) {
+            List<ProductType> productTypeList = productTypeRepository.findAll();
+            productTypeTreeList = handleTree(productTypeList);
+        }
+        return productTypeTreeList;
+    }
+
     private static List<ProductTypeTree> handleTree(List<ProductType> productTypeList) {
         List<ProductTypeTree> treeList = new ArrayList<ProductTypeTree>();
         Map<Long, ProductTypeTree> treeMap = new HashMap<Long, ProductTypeTree>();

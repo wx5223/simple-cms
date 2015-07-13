@@ -13,7 +13,7 @@
                     <li><a href="${ctx}/products">所有产品</a></li>
                     <li class="divider"></li>
                     <li class="dropdown-header">类型</li>
-                    <#list treeList as list>
+                    <#list productService.treeList as list>
                         <li><a href="${ctx}/products?type=${list.id}">${list.name}</a></li>
                     </#list>
                     <#--<li><a href="#">Another action</a></li>

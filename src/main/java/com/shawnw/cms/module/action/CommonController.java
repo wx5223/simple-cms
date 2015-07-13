@@ -1,60 +1,67 @@
 package com.shawnw.cms.module.action;
 
-import com.shawnw.cms.module.vo.ResultMsg;
-import com.shawnw.cms.utils.ConfigPropertiesUtils;
-import org.apache.commons.io.FilenameUtils;
+import com.shawnw.cms.module.dao.ProductRepository;
+import com.shawnw.cms.module.dao.ProductTypeRepository;
+import com.shawnw.cms.module.domain.Product;
+import com.shawnw.cms.module.domain.ProductType;
+import com.shawnw.cms.module.service.ProductService;
+import com.shawnw.cms.module.vo.ProductTypeTree;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by Shawn on 2015/6/2.
+ * Created by Shawn on 2015/7/9.
  */
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/")
 public class CommonController {
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public String upload(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
-        String name = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
-        String absolutePath = ConfigPropertiesUtils.get("upload.file.path", request.getSession().getServletContext().getRealPath("/") + "upload") + File.separator + name;
-        String downloadPath = "/upload/" + name;
-        File saveFile = new File(absolutePath);
-        if (!saveFile.exists()) {
-            saveFile.mkdirs();
-        }
-        try {
-            file.transferTo(saveFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return downloadPath;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private ProductTypeRepository productTypeRepository;
+    @RequestMapping("/index")
+    public String index(ModelMap model) {
+        List<ProductTypeTree> treeList = ProductService.getProductTypeTreeList();
+        model.addAttribute("treeList", treeList);
+        return "/index";
     }
 
+    @RequestMapping("/products")
+    public String products(ModelMap model, Long[] type, String keyword, Integer page) {
+        List<ProductTypeTree> treeList = ProductService.getProductTypeTreeList();
+        model.addAttribute("treeList", treeList);
+        if (page == null || page < 0) {
+            page = 0;
+        }
+        int pageSize = 10;
+        Page<Product> productPage = null;
+        Pageable pager = new PageRequest(page, pageSize);
+        if (StringUtils.isBlank(keyword)) {
+            productPage = productRepository.findAll(pager);
+        } else {
+            productPage = productRepository.findByTitle(keyword, pager);
+        }
+        model.addAttribute("page", productPage);
+        return "/products";
+    }
 
-    @RequestMapping(value = "/upload1", method = RequestMethod.POST)
-    @ResponseBody
-    public ResultMsg upload1(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
-        String name = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
-        String absolutePath = ConfigPropertiesUtils.get("upload.file.path", request.getSession().getServletContext().getRealPath("/") + "upload") + File.separator + name;
-        String downloadPath = "/upload/" + name;
-        File saveFile = new File(absolutePath);
-        if (!saveFile.exists()) {
-            saveFile.mkdirs();
-        }
-        try {
-            file.transferTo(saveFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ResultMsg.success("成功", "path", downloadPath);
+    @RequestMapping("/product/{id}")
+    public String product(@PathVariable Long id, ModelMap model) {
+        Product product = productRepository.findOne(id);
+        model.addAttribute("product", product);
+        return "/product";
     }
 }

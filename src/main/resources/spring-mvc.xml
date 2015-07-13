@@ -57,6 +57,11 @@
 			    <!--<prop key="auto_import">/include/macro.ftl as ms</prop>-->
 			</props>
 		</property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="productService" value-ref="productService" />
+            </map>
+        </property>
 	</bean>
 	
 	<!-- FreeMarker视图解析 如返回student。。在这里配置后缀名ftl和视图解析器。。 -->
