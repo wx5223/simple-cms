@@ -33,9 +33,7 @@ public class CommonController {
     @Autowired
     private ProductTypeRepository productTypeRepository;
     @RequestMapping("/index")
-    public String index(ModelMap model) {
-        List<ProductTypeTree> treeList = ProductService.getProductTypeTreeList();
-        model.addAttribute("treeList", treeList);
+    public String index() {
         return "/index";
     }
 

@@ -1,9 +1,12 @@
 package com.shawnw.cms.module.action;
 
+import com.shawnw.cms.module.service.ProductService;
+import com.shawnw.cms.module.vo.ProductTypeTree;
 import com.shawnw.cms.module.vo.ResultMsg;
 import com.shawnw.cms.utils.ConfigPropertiesUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -21,6 +25,11 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/api")
 public class CommonApiController {
+
+    @RequestMapping("/main")
+    public String index(ModelMap model) {
+        return "/main";
+    }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
