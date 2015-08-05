@@ -154,19 +154,19 @@
                     <input type="text" class="form-control" name="title" data-toggle="popover" placeholder="产品标题"
                            data-placement="right" data-content="" value="${(product.title)!""}">
                 </div>
-                <label for="ArticleList" class="col-md-1 control-label col-xs-3">自定义顺序:</label>
+                <#--<label for="ArticleList" class="col-md-1 control-label col-xs-3">自定义顺序:</label>
 
                 <div class="col-md-1  col-xs-1">
                     <input type="text" class="form-control" placeholder="0" maxlength="8" name="articleFreeOrder"
                            data-toggle="popover" data-placement="right" data-content="" id="ArticleList" value="0">
-                </div>
+                </div>-->
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label col-xs-3">缩略图:</label>
 
                 <div class="col-md-4 uploadImg  col-xs-6"><#--${article.basicThumbnails?default('')}-->
-					    <@uploadImg path="/upload/article" inputName="thumbnail" size="1" filetype="" msg="缩略图" imgs="${(product.thumbnail)!}" maxSize="1"/>
+					    <@uploadImg path="/upload/article" inputName="thumbnail" size="1" filetype="" msg="" imgs="${(product.thumbnail)!}" maxSize="1"/>
                 </div>
             </div>
 
@@ -183,6 +183,18 @@
                         <ul id="ztree1" class="ztree" style="margin-top:0; width:160px;">
                         </ul>
                     </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label col-xs-3">推荐/热门</label>
+                <div class="col-md-4 uploadImg  col-xs-6"><#--${article.basicThumbnails?default('')}-->
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="recommend" value="1" <#if (product.recommend)??&&product.recommend == 1>checked="checked"</#if>>推荐
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="hot" value="1" <#if (product.hot)??&&product.hot == 1>checked="checked"</#if>>热门
+                    </label>
                 </div>
             </div>
 
@@ -272,11 +284,11 @@
     $(function () {
         checkForm("#articleForm");
         // ajax 给选择父模块下拉框赋值
-        var treeJson = [
+        /*var treeJson = [
             {id: 1, pId: null, name: '001', type: '1s'},
             {id: 2, pId: 1, name: '002', type: 1},
             {id: 3, pId: 1, name: '003', type: 1}
-        ];
+        ];*/
         setting = {
             view: {
                 dblClickExpand: false
@@ -291,46 +303,16 @@
                 onClick: onClick
             }
         };
-        $.fn.zTree.init($("#ztree1"), setting, treeJson);
+        //$.fn.zTree.init($("#ztree1"), setting, treeJson);
         $.ajax({
             type: "post",
-            url: ctx + "/manager/cms/column/queryJsonAll.do",
+            url: "${ctx}/api/product/type/json",
             dataType: "json",
-            success: function (msg) {
-                var modelList = $.parseJSON(msg.resultData);
-                //获取栏目名
-                for (var i = 0; i < modelList.length; i++) {
-                    if ($("input[name='basicCategoryId']").val() == modelList[i].categoryId) {
-                        $("#treeShowName").html(modelList[i].categoryTitle);
-                    }
-                }
-                setting = {
-                    view: {
-                        dblClickExpand: false
-                    },
-                    data: {
-                        simpleData: {
-                            enable: true
-                        }
-                    },
-                    callback: {
-                        beforeClick: beforeClick,
-                        onClick: onClick
-                    }
-                };
-                var zNodes = new Array();
-                for (var i = 0; i < modelList.length; i++) {
-                    zNodes[i] = {
-                        id: modelList[i].categoryId,
-                        pId: modelList[i].categoryCategoryId,
-                        name: modelList[i].categoryTitle,
-                        type: modelList[i].columnType,
-                        open: true
-                    }
-                }
-                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            success: function (treeJson) {
+                $.fn.zTree.init($("#ztree1"), setting, treeJson);
             },
         });
+
 
     });
 </script>

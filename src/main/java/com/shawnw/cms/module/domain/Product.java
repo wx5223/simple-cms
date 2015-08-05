@@ -23,6 +23,8 @@ public class Product {
     private String content;
     private Date createTime;
     private Date updateTime;
+    private Long recommend;
+    private Long hot;
 
     public Long getId() {
         return id;
@@ -94,5 +96,21 @@ public class Product {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Long getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(Long recommend) {
+        this.recommend = recommend;
+    }
+
+    public Long getHot() {
+        return hot;
+    }
+
+    public void setHot(Long hot) {
+        this.hot = hot;
     }
 }
