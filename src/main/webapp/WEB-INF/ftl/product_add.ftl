@@ -175,7 +175,7 @@
                 <div class="col-md-3  col-xs-4">
                     <label id="menuBtn" role="button" data-toggle="dropdown" class="form-control"
                            onClick="showMenu(); return false;">
-                        <span id="treeShowName" style="float: left;width: 85px;">请选择</span><span class="caret" style="float: right;margin-top: 8px;"></span>
+                        <span id="treeShowName" style="float: left;width: 85px;">${(product.typeName)!"请选择"}</span><span class="caret" style="float: right;margin-top: 8px;"></span>
                     </label>
                     <input type="hidden" name="typeId" value="${(product.typeId)!""}"/>
                     <input type="hidden" name="typeName" value="${(product.typeName)!""}"/>
@@ -309,11 +309,16 @@
             url: "${ctx}/api/product/type/json",
             dataType: "json",
             success: function (treeJson) {
-                $.fn.zTree.init($("#ztree1"), setting, treeJson);
-            },
+                treeObj = $.fn.zTree.init($("#ztree1"), setting, treeJson);
+                <#if (product.typeId)??>
+                    var node = treeObj.getNodeByParam("id", ${(product.typeId)!""} , null);
+                    if(node != null) {
+                        treeObj.selectNode(node);
+                        treeObj.expandNode(node, true, true, true);
+                    }
+                </#if>
+            }
         });
-
-
     });
 </script>
 </body>

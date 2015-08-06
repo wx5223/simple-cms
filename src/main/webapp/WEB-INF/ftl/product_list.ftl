@@ -189,14 +189,14 @@
     $(function () {
         //预览文章
         $("#articlePage").delegate("table tr .preview", "click", function () {
-            var articleId = $(this).attr("data-id");
-            window.open(ctx + "/manager/cms/generate/" + articleId + "/article.do");
+            var id = $(this).attr("data-id");
+            window.open("${ctx}/product/" + id);
         });
 
         //删除文章
         $("#articlePage").delegate("table tr .deleteArticle", "click", function () {
-            var articleId = $(this).attr("data-id");
-            warnModel("确定要删除？", "删除", "right(" + articleId + ")");
+            var id = $(this).attr("data-id");
+            warnModel("确定要删除？", "删除", "right(" + id + ")");
         });
 
         //添加文章

@@ -12,11 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,14 +53,64 @@ public class CommonController {
         }
         int pageSize = 10;
         Page<Product> productPage = null;
-        Pageable pager = new PageRequest(page, pageSize);
-        if (StringUtils.isBlank(keyword)) {
+        Pageable pager = new PageRequest(page, pageSize, new Sort(Sort.Direction.DESC, "updateTime"));
+        /*if (StringUtils.isBlank(keyword)) {
             productPage = productRepository.findAll(pager);
         } else {
             productPage = productRepository.findByTitle(keyword, pager);
-        }
+        }*/
+        productPage = productRepository.findAll(getSpecification(keyword, null, null), pager);
         model.addAttribute("page", productPage);
         return "/products";
+    }
+
+    @RequestMapping("/products/query")
+    @ResponseBody
+    public Page<Product> productsQuery(String keyword, Integer page, Long recommend, Long hot) {
+        if (page == null || page < 0) {
+            page = 0;
+        }
+        int pageSize = 10;
+        Page<Product> productPage = null;
+        Pageable pager = new PageRequest(page, pageSize, new Sort(Sort.Direction.DESC, "updateTime"));
+        productPage = productRepository.findAll(getSpecification(keyword, recommend, hot), pager);
+        return productPage;
+    }
+
+    private Specification<Product> getSpecification(final String keyword, final Long recommend, final Long hot){
+        return new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicate = new ArrayList<Predicate>();
+                if(StringUtils.isNotBlank(keyword)){
+                    String keywordLike = keyword;
+                    if (keyword.indexOf("%") < 0) {
+                        keywordLike = "%" + keyword + "%";
+                    }
+                    predicate.add(cb.like(root.get("title").as(String.class), keywordLike));
+                }
+                if (recommend != null && hot != null) {
+                    predicate.add(cb.or(
+                            cb.equal(root.get("recommend").as(Long.class), recommend),
+                            cb.equal(root.get("hot").as(Long.class), hot)
+                    ));
+                } else if (recommend != null) {
+                    predicate.add(cb.equal(root.get("recommend").as(Long.class), recommend));
+                } else if (hot != null) {
+                    predicate.add(cb.equal(root.get("hot").as(Long.class), hot));
+                }
+                /*if (searchArticle.getRecTimeEnd()!=null){
+                    predicate.add(cb.lessThanOrEqualTo(root.get("recommendTime").as(Date.class), searchArticle.getRecTimeEnd()));
+                }
+                if (StringUtils.isNotBlank(searchArticle.getNickname())){
+                    //两张表关联查询
+                    Join<Article,User> userJoin = root.join(root.getModel().getSingularAttribute("user",User.class),JoinType.LEFT);
+                    predicate.add(cb.like(userJoin.get("nickname").as(String.class), "%" + searchArticle.getNickname() + "%"));
+                }*/
+                Predicate[] pre = new Predicate[predicate.size()];
+                return query.where(predicate.toArray(pre)).getRestriction();
+            }
+        };
     }
 
     @RequestMapping("/product/{id}")

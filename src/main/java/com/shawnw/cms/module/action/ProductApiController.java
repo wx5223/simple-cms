@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +46,14 @@ public class ProductApiController {
     @RequestMapping("/save")
     @ResponseBody
     public ResultMsg save(Product product) {
+        if (product == null) {
+            return ResultMsg.msg(-1l, "失败");
+        }
+        Date time = new Date();
+        if (product.getId() == null) {
+            product.setCreateTime(time);
+        }
+        product.setUpdateTime(time);
         productRepository.save(product);
         return ResultMsg.success("成功");
     }
