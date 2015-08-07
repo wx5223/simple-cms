@@ -14,6 +14,7 @@ public class ProductTypeTree {
     private String type;
     private String description;
     private List<ProductTypeTree> children;
+    private Long count;
 
     public void addChild(ProductTypeTree child) {
         if (children == null) {
@@ -76,5 +77,13 @@ public class ProductTypeTree {
 
     public void setChildren(List<ProductTypeTree> children) {
         this.children = children;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
 }

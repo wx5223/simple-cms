@@ -54,11 +54,6 @@ public class CommonController {
         int pageSize = 10;
         Page<Product> productPage = null;
         Pageable pager = new PageRequest(page, pageSize, new Sort(Sort.Direction.DESC, "updateTime"));
-        /*if (StringUtils.isBlank(keyword)) {
-            productPage = productRepository.findAll(pager);
-        } else {
-            productPage = productRepository.findByTitle(keyword, pager);
-        }*/
         productPage = productRepository.findAll(getSpecification(keyword, null, null), pager);
         model.addAttribute("page", productPage);
         return "/products";
@@ -66,7 +61,7 @@ public class CommonController {
 
     @RequestMapping("/products/query")
     @ResponseBody
-    public Page<Product> productsQuery(String keyword, Integer page, Long recommend, Long hot) {
+    public Page<Product> productsQuery(String keyword, Integer page, Long recommend, Long hot, String ids) {
         if (page == null || page < 0) {
             page = 0;
         }

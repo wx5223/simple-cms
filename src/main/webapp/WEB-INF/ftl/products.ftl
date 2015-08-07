@@ -143,12 +143,12 @@
             <ul class="list">
                 <li class="list-item"><label class="col-xs-8 title">符合条件</label></li>
                 <li class="list-item">
-                    <input id="type_id_" type="checkbox" class="check">
-                    <label for="type_id_" class="name">推荐</label>
+                    <input id="type_id_recommend" type="checkbox" class="check">
+                    <label for="type_id_recommend" class="name">推荐</label>
                 </li>
                 <li class="list-item">
-                    <input id="type_id_" type="checkbox" class="check">
-                    <label for="type_id_" class="name">热门</label>
+                    <input id="type_id_hot" type="checkbox" class="check">
+                    <label for="type_id_hot" class="name">热门</label>
                 </li>
                 <li class="list-item"><hr></li>
                 <li class="list-item">
@@ -157,16 +157,16 @@
                 </li>
                 <#list treeList as list>
                     <li class="list-item">
-                        <input id="type_id_${list.id}" type="checkbox" class="check">
+                        <input id="type_id_${list.id}" type="checkbox" class="check" value="${list.id}">
                         <label for="type_id_${list.id}" class="name name_bold">${list.name}</label>
-                        <label for="type_id_${list.id}" class="count">14</label>
+                        <label for="type_id_${list.id}" class="count">${list.count}</label>
                         <#if list.children?has_content>
                         <ul class="list">
                         <#list list.children as childList>
                             <li class="list-item">
-                                <input id="type_id_${childList.id}" type="checkbox" class="check">
+                                <input id="type_id_${childList.id}" type="checkbox" class="check" value="${list.id}">
                                 <label for="type_id_${childList.id}" class="name">&nbsp;&nbsp;&nbsp;&nbsp;${childList.name}</label>
-                                <label for="type_id_${childList.id}" class="count">14</label>
+                                <label for="type_id_${childList.id}" class="count">${list.count}</label>
                             </li>
                         </#list>
                         </ul>
@@ -267,7 +267,71 @@
             var id = $(this).attr("name");
             location.href = "${ctx}/product/"+id;
         });
+        $('input:checkbox').change(function () {
+            var id = $(this).attr("id");
+            var checked = false;
+            if($(this).is(":checked") == true){
+                checked = true;
+            }
+            reload();
+        });
     });
+    recommend = null;
+    hot = null;
+    ids = null;
+    function reload() {
+        var idsArray = [];
+        $("input:checkbox").each(function(){
+            var id = $(this).attr("id");
+            if($(this).is(":checked") == true){
+                if(id == 'type_id_recommend') {
+                    recommend = 1;
+                } else if(id == 'type_id_hot') {
+                    hot = 1;
+                } else if(id != 'type_id_0') {
+                    var id_value = $(this).val();
+                    idsArray.push(id_value);
+                    ids = idsArray.join(",");
+                }
+            }
+        })
+        $.post("${ctx}/products/query", {
+            keyword:$("input[name=keyword]").val(),
+            recommend: recommend,
+            hot: hot,
+            ids: ids,
+            page:page+1
+        }, function(data){
+            page++;
+            for (var i in data.content){
+                //alert( i + "," + data.context[i]);
+                var obj = data.content[i];
+                var typeName = "未知";
+                if(obj.typeId != null) {
+                    typeName = obj.typeName;
+                }
+                var tip = "";
+                if(obj.recommend != null) {
+                    tip+="<a href=\"javascript:void(0)\" class=\"btn btn-info btn-xs\">推荐</a>";
+                }
+                if(obj.hot != null) {
+                    tip+="&nbsp;<a href=\"javascript:void(0)\" class=\"btn btn-success btn-xs\">热门</a>";
+                }
+                var div = "<div><div name="+obj.id+" class=\"row product-list-item\"><div class=\"col-md-2 col-xs-3\">" +
+                        "<img src=\"${ctx}"+obj.thumbnail+"\" class=\"product-thumbnail\"></div>" +
+                        "<div class=\"col-md-7 col-xs-6 product-main\"><div>"+obj.title+"</div><div>"+
+                        "<a href=\"${ctx}/products?type="+obj.typeId+"\">"+typeName+"</a></div><span>"+obj.brief+"</span></div>"+
+                        "<div class=\"col-xs-3 text-right\"><p>"+obj.updateTime+"</p>"+tip+"</div></div></div>";
+                $("#product-listing").append($(div));
+            }
+            if(data.lastPage) {
+                $(".product-listing-loadmore").hide();
+            } else {
+                $("#listing-loading").hide();
+                $("#listing-load-more").show();
+            }
+        });
+    }
     function loadmore() {
         $("#listing-load-more").hide();
         $("#listing-loading").show();
