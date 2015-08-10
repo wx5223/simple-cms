@@ -128,6 +128,9 @@
         height: 1px;
         border-top: 1px solid #ccc;
     }
+    .display-none {
+        display: none;
+    }
 </style>
 <body>
 <#include "/include/navbar.ftl"/>
@@ -152,19 +155,19 @@
                 </li>
                 <li class="list-item"><hr></li>
                 <li class="list-item">
-                    <input id="type_id_0" type="checkbox" class="check">
+                    <input id="type_id_0" type="checkbox" class="check" checked="checked">
                     <label for="type_id_0" class="name name_bold">所有类型</label>
                 </li>
                 <#list treeList as list>
                     <li class="list-item">
-                        <input id="type_id_${list.id}" type="checkbox" class="check" value="${list.id}">
+                        <input id="type_id_${list.id}" data-name="${list.id}" type="checkbox" class="check" value="${list.id}">
                         <label for="type_id_${list.id}" class="name name_bold">${list.name}</label>
                         <label for="type_id_${list.id}" class="count">${list.count}</label>
                         <#if list.children?has_content>
                         <ul class="list">
                         <#list list.children as childList>
                             <li class="list-item">
-                                <input id="type_id_${childList.id}" type="checkbox" class="check" value="${list.id}">
+                                <input id="type_id_${childList.id}" data-name="${childList.id}" type="checkbox" class="check" value="${childList.id}">
                                 <label for="type_id_${childList.id}" class="name">&nbsp;&nbsp;&nbsp;&nbsp;${childList.name}</label>
                                 <label for="type_id_${childList.id}" class="count">${list.count}</label>
                             </li>
@@ -176,7 +179,7 @@
             </ul>
         </div>
         <div data-js="product-listing" class="product-listing">
-            <div id="product-listing-loading" class="product-listing-loading hide">
+            <div id="product-listing-loading" class="product-listing-loading display-none">
                 <div class="row">
                     <div class="text-center"><h3>载入...</h3></div>
                 </div>
@@ -186,7 +189,7 @@
                     </div>
                 </div>
             </div>
-            <div id="product-listing-holder" class="product-listing-holder">
+            <div id="product-listing-holder" class="product-listing-holder display-none">
                 <#--
                 <div class="row">
                     <div class="text-center col-md-4 col-md-offset-4"><h3>载入...</h3></div>
@@ -201,6 +204,7 @@
 
             <h1>产品</h1>
             <div id="product-listing" class="product-listing-holder">
+                <#--
                 <#if page.content?has_content>
                     <#list page.content as list>
                         <div>
@@ -210,22 +214,22 @@
                                 </div>
                                 <div class="col-md-7 col-xs-6 product-main">
                                     <div>${list.title}</div>
-                                    <div><#if list.typeId?exists><a href="${ctx}/products?type=${list.typeId}">${list.typeName!"未知"}</a></#if></div>
+                                    <div><#if list.typeId?exists><a href="javascript:void(0)" data-name="type_id_${list.typeId}" class="check-link">${list.typeName!"未知"}</a></#if></div>
                                     <span>${(list.brief)!}</span>
                                 </div>
                                 <div class="col-xs-3 text-right">
                                     <p>${(list.updateTime)!""}</p>
                                     <#if (list.recommend)??&&list.recommend == 1>
-                                    <a href="javascript:void(0)" class="btn btn-info btn-xs">推荐</a>
+                                    <a href="javascript:void(0)" data-name="type_id_recommend" class="btn btn-info btn-xs check-link" onclick="check()">推荐</a>
                                     </#if>
                                     <#if (list.hot)??&&list.hot == 1>
-                                        <a href="javascript:void(0)" class="btn btn-success btn-xs">热门</a>
+                                        <a href="javascript:void(0)" data-name="type_id_hot" class="btn btn-success btn-xs check-link" onclick="check()">热门</a>
                                     </#if>
                                 </div>
                             </div>
                         </div>
                     </#list>
-                </#if>
+                </#if>-->
                 <#--
                 <div>
                     <a href="${ctx}/product">
@@ -245,16 +249,16 @@
                     </a>
                 </div>-->
             </div>
-            <#if !page.last>
-                <div class="product-listing-loadmore">
+            <#--<#if !page.last>-->
+                <div class="product-listing-loadmore display-none">
                     <div class="row">
-                        <div class="col-md-12"><a id="listing-load-more" href="javascript:loadmore();"><span
+                        <div class="col-md-12"><a id="listing-load-more" href="javascript:query(true);"><span
                                 data-js="ready">载入更多...</span><span id="listing-loading" class="hide">载入...</span></a>
                         </div>
                     </div>
                 </div>
                 <div class="product-listing-bottomborder"></div>
-            </#if>
+            <#--</#if>-->
             </div>
         </div>
     </div>
@@ -262,24 +266,64 @@
 <#include "/include/foot.ftl"/>
 <script>
     page=0;
+    var check = function(event){
+        event.stopPropagation();
+        var checkId = $(this).attr("data-name");
+        $("#" + checkId).click();
+    };
+    var itemclick = function() {
+        var id = $(this).attr("name");
+        location.href = "${ctx}/product/"+id;
+    };
     $(function() {
-        $("div.product-list-item").click(function() {
-            var id = $(this).attr("name");
-            location.href = "${ctx}/product/"+id;
-        });
         $('input:checkbox').change(function () {
             var id = $(this).attr("id");
-            var checked = false;
-            if($(this).is(":checked") == true){
-                checked = true;
+            if(id == 'type_id_0') {
+                $('input:checkbox[data-name]').removeAttr("checked");
+            } else if(id != 'type_id_recommend'&& id != 'type_id_hot') {
+                $("#type_id_0").removeAttr("checked");
             }
-            reload();
+            query();
         });
+        /*$("div.product-list-item").click(itemclick);
+        $('a.check-link').click(check);*/
+        $('#type_id_' +${(Parameters.type)!""}).attr('checked', 'checked');
+        query();
     });
-    recommend = null;
-    hot = null;
-    ids = null;
-    function reload() {
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    };
+    function query(next) {
+        var pageTemp = 0;
+        if(next) {
+            pageTemp = page + 1;
+            $("#listing-load-more").hide();
+            $("#listing-loading").show();
+        } else {
+            page = 0;
+            $("#product-listing-loading").show();
+            $("#product-listing").empty();
+            $("#product-listing-holder").hide();
+            $(".product-listing-loadmore").hide();
+        }
+
+        var recommend = null;
+        var hot = null;
+        var ids = null;
         var idsArray = [];
         $("input:checkbox").each(function(){
             var id = $(this).attr("id");
@@ -294,15 +338,17 @@
                     ids = idsArray.join(",");
                 }
             }
-        })
+        });
         $.post("${ctx}/products/query", {
             keyword:$("input[name=keyword]").val(),
             recommend: recommend,
             hot: hot,
             ids: ids,
-            page:page+1
+            page:pageTemp
         }, function(data){
-            page++;
+            if(next) {
+                page++;
+            }
             for (var i in data.content){
                 //alert( i + "," + data.context[i]);
                 var obj = data.content[i];
@@ -310,63 +356,40 @@
                 if(obj.typeId != null) {
                     typeName = obj.typeName;
                 }
+                var updateTime = "";
+                if(obj.updateTime != null) {
+                    var updateTimeDate = new Date(obj.updateTime);
+                    updateTime = updateTimeDate.format("yyyy年MM月dd日 hh:mm:ss");
+                }
+                var brief = "";
+                if(obj.brief != null) {
+                    brief = obj.brief;
+                }
                 var tip = "";
                 if(obj.recommend != null) {
-                    tip+="<a href=\"javascript:void(0)\" class=\"btn btn-info btn-xs\">推荐</a>";
+                    tip+="<a href=\"javascript:void(0)\" data-name=\"type_id_recommend\" class=\"btn btn-info btn-xs check-link\" >推荐</a>";
                 }
                 if(obj.hot != null) {
-                    tip+="&nbsp;<a href=\"javascript:void(0)\" class=\"btn btn-success btn-xs\">热门</a>";
+                    tip+="&nbsp;<a href=\"javascript:void(0)\" data-name=\"type_id_hot\" class=\"btn btn-success btn-xs check-link\">热门</a>";
                 }
                 var div = "<div><div name="+obj.id+" class=\"row product-list-item\"><div class=\"col-md-2 col-xs-3\">" +
                         "<img src=\"${ctx}"+obj.thumbnail+"\" class=\"product-thumbnail\"></div>" +
                         "<div class=\"col-md-7 col-xs-6 product-main\"><div>"+obj.title+"</div><div>"+
-                        "<a href=\"${ctx}/products?type="+obj.typeId+"\">"+typeName+"</a></div><span>"+obj.brief+"</span></div>"+
-                        "<div class=\"col-xs-3 text-right\"><p>"+obj.updateTime+"</p>"+tip+"</div></div></div>";
+                        "<a href=\"javascript:void(0)\" data-name=\"type_id_"+obj.typeId+"\" class=\"check-link\">"+typeName+"</a></div><span>"+brief+"</span></div>"+
+                        "<div class=\"col-xs-3 text-right\"><p>"+updateTime+"</p>"+tip+"</div></div></div>";
                 $("#product-listing").append($(div));
+                $('a.check-link').unbind('click').click(check);
+                $("div.product-list-item").unbind('click').click(itemclick);
             }
+            $("#product-listing-loading").hide();
             if(data.lastPage) {
                 $(".product-listing-loadmore").hide();
             } else {
+                $(".product-listing-loadmore").show();
                 $("#listing-loading").hide();
                 $("#listing-load-more").show();
             }
-        });
-    }
-    function loadmore() {
-        $("#listing-load-more").hide();
-        $("#listing-loading").show();
-        $.post("${ctx}/products/query", {
-            keyword:$("input[name=keyword]").val(),
-            page:page+1
-        }, function(data){
-            page++;
-            for (var i in data.content){
-                //alert( i + "," + data.context[i]);
-                var obj = data.content[i];
-                var typeName = "未知";
-                if(obj.typeId != null) {
-                    typeName = obj.typeName;
-                }
-                var tip = "";
-                if(obj.recommend != null) {
-                    tip+="<a href=\"javascript:void(0)\" class=\"btn btn-info btn-xs\">推荐</a>";
-                }
-                if(obj.hot != null) {
-                    tip+="&nbsp;<a href=\"javascript:void(0)\" class=\"btn btn-success btn-xs\">热门</a>";
-                }
-                var div = "<div><div name="+obj.id+" class=\"row product-list-item\"><div class=\"col-md-2 col-xs-3\">" +
-                        "<img src=\"${ctx}"+obj.thumbnail+"\" class=\"product-thumbnail\"></div>" +
-                        "<div class=\"col-md-7 col-xs-6 product-main\"><div>"+obj.title+"</div><div>"+
-                        "<a href=\"${ctx}/products?type="+obj.typeId+"\">"+typeName+"</a></div><span>"+obj.brief+"</span></div>"+
-                        "<div class=\"col-xs-3 text-right\"><p>"+obj.updateTime+"</p>"+tip+"</div></div></div>";
-                $("#product-listing").append($(div));
-            }
-            if(data.lastPage) {
-                $(".product-listing-loadmore").hide();
-            } else {
-                $("#listing-loading").hide();
-                $("#listing-load-more").show();
-            }
+            $("#product-listing-holder").show();
         });
     }
 </script>

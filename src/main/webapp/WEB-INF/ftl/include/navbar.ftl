@@ -5,8 +5,9 @@
                 <img src=""></img>
             </a></li>
             <li><a href="${ctx}/index">首页</a></li>
-            <li><a href="#about">产品推荐</a></li>
-            <li><a href="#contact">相关知识</a></li>
+            <li><a href="${ctx}/products?type=recommend">推荐产品</a></li>
+            <li><a href="${ctx}/products?type=hot">热门产品</a></li>
+            <#--<li><a href="#contact">相关知识</a></li>-->
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">产品 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -24,9 +25,16 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">购买方式</a></li>
             <li class="active"><a href="#">在线留言</a></li>
-            <li><a href="#">联系我们</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">购买&联系<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="${ctx}/buy_first">购买必读</a></li>
+                    <li><a href="${ctx}/send">配送方式</a></li>
+                    <li><a href="${ctx}/order">订购方式</a></li>
+                    <li><a href="${ctx}/buy">付款方式</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

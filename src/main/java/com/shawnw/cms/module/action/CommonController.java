@@ -44,6 +44,26 @@ public class CommonController {
         return "/index";
     }
 
+    @RequestMapping("/buy_first")
+    public String buy_first() {
+        return "/buy_first";
+    }
+
+    @RequestMapping("/buy")
+    public String buy() {
+        return "/buy";
+    }
+
+    @RequestMapping("/order")
+    public String order() {
+        return "/order";
+    }
+
+    @RequestMapping("/send")
+    public String send() {
+        return "/send";
+    }
+
     @RequestMapping("/products")
     public String products(ModelMap model, Long[] type, String keyword, Integer page) {
         List<ProductTypeTree> treeList = ProductService.getProductTypeTreeList();
@@ -54,7 +74,7 @@ public class CommonController {
         int pageSize = 10;
         Page<Product> productPage = null;
         Pageable pager = new PageRequest(page, pageSize, new Sort(Sort.Direction.DESC, "updateTime"));
-        productPage = productRepository.findAll(getSpecification(keyword, null, null), pager);
+        productPage = productRepository.findAll(getSpecification(keyword, null, null, null), pager);
         model.addAttribute("page", productPage);
         return "/products";
     }
@@ -68,11 +88,11 @@ public class CommonController {
         int pageSize = 10;
         Page<Product> productPage = null;
         Pageable pager = new PageRequest(page, pageSize, new Sort(Sort.Direction.DESC, "updateTime"));
-        productPage = productRepository.findAll(getSpecification(keyword, recommend, hot), pager);
+        productPage = productRepository.findAll(getSpecification(keyword, recommend, hot, ids), pager);
         return productPage;
     }
 
-    private Specification<Product> getSpecification(final String keyword, final Long recommend, final Long hot){
+    private Specification<Product> getSpecification(final String keyword, final Long recommend, final Long hot, final String ids){
         return new Specification<Product>() {
             @Override
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -93,6 +113,20 @@ public class CommonController {
                     predicate.add(cb.equal(root.get("recommend").as(Long.class), recommend));
                 } else if (hot != null) {
                     predicate.add(cb.equal(root.get("hot").as(Long.class), hot));
+                }
+                if (StringUtils.isNotBlank(ids)) {
+                    String[] idsArray = ids.split(",");
+                    CriteriaBuilder.In in = cb.in(root.get("typeId"));
+                    for (String idStr : idsArray) {
+                        Long id = null;
+                        try {
+                            id = Long.parseLong(idStr);
+                            in.value(id);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    predicate.add(in);
                 }
                 /*if (searchArticle.getRecTimeEnd()!=null){
                     predicate.add(cb.lessThanOrEqualTo(root.get("recommendTime").as(Date.class), searchArticle.getRecTimeEnd()));

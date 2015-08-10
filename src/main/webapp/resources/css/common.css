@@ -71,7 +71,7 @@ em.required {
 .link-style a:hover{color:#000;}
 .link-style a:visited{color:#000;}
 
-/*定格按钮*/
+/*锟斤拷锟斤拷钮*/
 .ms-fix-bottom,.ms-fix-top{
     position: fixed;
     z-index: 99999999;
@@ -90,5 +90,25 @@ em.required {
 .ms-fix-top {
     top: 0;
 }
-/*重写bootstrap的表单label样式*/
 .control-label{font-weight:normal;font-size:14px;}
+
+.rc-NewPageHeader {
+    color: #757575;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px #d9d9d9;
+    -moz-box-shadow: 0 1px #d9d9d9;
+    -ms-box-shadow: 0 1px #d9d9d9;
+    -o-box-shadow: 0 1px #d9d9d9;
+    box-shadow: 0 1px #d9d9d9;
+    position: relative;
+    margin-bottom: 1px;
+}
+
+hr.header-after {
+    margin-bottom: 42px;
+}
+.container .container-full-canvas {
+    width: 100%;
+    margin-left: 0;
+    padding: 12px 90px 108px 90px;
+}
