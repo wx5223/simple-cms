@@ -28,7 +28,7 @@
         position: relative;
         float: left;
         width: 25%;
-        min-height: 1px;
+        min-height: 500px;
         padding-right: 15px;
         padding-right: 10px;
         border-right: 1px solid #ccc;
@@ -137,7 +137,7 @@
 <div class="container body-container">
     <div class="row bottom-line">
         <div class="text-center">
-            <input type="search" name="keyword" placeholder="搜索产品名称" class="form-control product-search">
+            <input id="keyword" type="search" name="keyword" placeholder="搜索产品名称" class="form-control product-search">
         </div>
     </div>
     <div class="row">
@@ -155,10 +155,10 @@
                 </li>
                 <li class="list-item"><hr></li>
                 <li class="list-item">
-                    <input id="type_id_0" type="checkbox" class="check" checked="checked">
+                    <input id="type_id_0" type="checkbox" class="check">
                     <label for="type_id_0" class="name name_bold">所有类型</label>
                 </li>
-                <#list treeList as list>
+                <#list productService.treeList as list>
                     <li class="list-item">
                         <input id="type_id_${list.id}" data-name="${list.id}" type="checkbox" class="check" value="${list.id}">
                         <label for="type_id_${list.id}" class="name name_bold">${list.name}</label>
@@ -169,7 +169,7 @@
                             <li class="list-item">
                                 <input id="type_id_${childList.id}" data-name="${childList.id}" type="checkbox" class="check" value="${childList.id}">
                                 <label for="type_id_${childList.id}" class="name">&nbsp;&nbsp;&nbsp;&nbsp;${childList.name}</label>
-                                <label for="type_id_${childList.id}" class="count">${list.count}</label>
+                                <label for="type_id_${childList.id}" class="count">${childList.count}</label>
                             </li>
                         </#list>
                         </ul>
@@ -275,21 +275,6 @@
         var id = $(this).attr("name");
         location.href = "${ctx}/product/"+id;
     };
-    $(function() {
-        $('input:checkbox').change(function () {
-            var id = $(this).attr("id");
-            if(id == 'type_id_0') {
-                $('input:checkbox[data-name]').removeAttr("checked");
-            } else if(id != 'type_id_recommend'&& id != 'type_id_hot') {
-                $("#type_id_0").removeAttr("checked");
-            }
-            query();
-        });
-        /*$("div.product-list-item").click(itemclick);
-        $('a.check-link').click(check);*/
-        $('#type_id_' +${(Parameters.type)!""}).attr('checked', 'checked');
-        query();
-    });
     Date.prototype.format = function(fmt) {
         var o = {
             "M+" : this.getMonth()+1,                 //月份
@@ -392,6 +377,27 @@
             $("#product-listing-holder").show();
         });
     }
+    $(function() {
+        $('input:checkbox').change(function () {
+            var id = $(this).attr("id");
+            if(id == 'type_id_0') {
+                $('input:checkbox[data-name]').removeAttr("checked");
+            } else if(id != 'type_id_recommend'&& id != 'type_id_hot') {
+                $("#type_id_0").removeAttr("checked");
+            }
+            query();
+        });
+        $('#keyword').keydown(function(e){
+            if(e.keyCode==13){
+                query();
+            }
+        });
+        /*$("div.product-list-item").click(itemclick);
+        $('a.check-link').click(check);*/
+        var type_id = '${(RequestParameters.type)!"0"}';
+        $('#type_id_'+type_id).attr('checked', 'checked');
+        query();
+    });
 </script>
 </body>
 </html>

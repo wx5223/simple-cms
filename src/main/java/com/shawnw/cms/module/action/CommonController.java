@@ -64,18 +64,13 @@ public class CommonController {
         return "/send";
     }
 
+    @RequestMapping("/partners")
+    public String partners() {
+        return "/partners";
+    }
+
     @RequestMapping("/products")
-    public String products(ModelMap model, Long[] type, String keyword, Integer page) {
-        List<ProductTypeTree> treeList = ProductService.getProductTypeTreeList();
-        model.addAttribute("treeList", treeList);
-        if (page == null || page < 0) {
-            page = 0;
-        }
-        int pageSize = 10;
-        Page<Product> productPage = null;
-        Pageable pager = new PageRequest(page, pageSize, new Sort(Sort.Direction.DESC, "updateTime"));
-        productPage = productRepository.findAll(getSpecification(keyword, null, null, null), pager);
-        model.addAttribute("page", productPage);
+    public String products(String[] type) {
         return "/products";
     }
 

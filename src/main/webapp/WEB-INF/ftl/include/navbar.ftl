@@ -25,7 +25,7 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">在线留言</a></li>
+            <li class="active"><a href="${ctx}/partners">合作伙伴</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">购买&联系<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
