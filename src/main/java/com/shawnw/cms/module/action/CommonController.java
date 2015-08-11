@@ -39,7 +39,7 @@ public class CommonController {
     private ProductRepository productRepository;
     @Autowired
     private ProductTypeRepository productTypeRepository;
-    @RequestMapping("/index")
+    @RequestMapping({"/", "/index"})
     public String index() {
         return "/index";
     }

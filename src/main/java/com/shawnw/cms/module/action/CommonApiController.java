@@ -26,7 +26,7 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class CommonApiController {
 
-    @RequestMapping("/main")
+    @RequestMapping({"/", "/main"})
     public String index(ModelMap model) {
         return "/main";
     }

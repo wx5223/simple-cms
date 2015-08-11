@@ -112,3 +112,24 @@ hr.header-after {
     margin-left: 0;
     padding: 12px 90px 108px 90px;
 }
+.error_page {
+    text-align: center;
+}
+.error_page .desc {
+    width: 100%;
+    font-size: 30px;
+    color: #555;
+    position: absolute;
+    top: 15%;
+    line-height: 35px;
+}
+.error_page .error {
+    width: 100%;
+    position: absolute;
+    font-size: 200px;
+    top: 40%;
+    opacity: 0.5;
+    filter: alpha(opacity=0.5);
+    color: #999;
+    text-shadow: 0 -1px 1px #000000, 0 1px 1px #ffffff;
+}
