@@ -8,17 +8,6 @@
 		width: 200px;
 		height: 140px;
 	}
-	.rc-NewPageHeader {
-		color: #757575;
-		background-color: #fff;
-		-webkit-box-shadow: 0 1px #d9d9d9;
-		-moz-box-shadow: 0 1px #d9d9d9;
-		-ms-box-shadow: 0 1px #d9d9d9;
-		-o-box-shadow: 0 1px #d9d9d9;
-		box-shadow: 0 1px #d9d9d9;
-		position: relative;
-		margin-bottom: 1px;
-	}
 </style>
 <body>
 <#include "/include/navbar.ftl"/>

@@ -1,15 +1,14 @@
-<#include "ui/index.ftl"/>
-
 <#--分页-->
-<#macro showPage page>
-<#if page?exists && page.pageCount gt 1>
+<#macro showPage page linkUrl>
+<#--${page.totalPages}-${page.number}-${page.size}-<#if page.first>true</#if><#if page.last>true</#if>-->
+<#if page?exists && page.totalPages gt 1>
 	<ul class="pagination pull-right">
 		<#--格式 <（上一页） 1 2 3 4 >(下一页) -->
-		<li class="prev <#if (page.pageNo+1)==1> disabled" ><a<#else> "><a href="${page.previousUrl}" </#if>><i class="fa fa-angle-left">上一页</i></a></li>
-			<#list 1..page.pageCount as i>
-				<li <#if page.pageNo+1==i>class="active" ><a<#else> ><a href='${page.linkUrl}pageNo=${i}'</#if>>${i}</a></li>
+		<li class="prev <#if (page.first)> disabled" ><a<#else> "><a href="${linkUrl}page=${page.number-1}" </#if>><i class="fa fa-angle-left">上一页</i></a></li>
+			<#list 1..page.totalPages as i>
+				<li <#if page.number+1==i>class="active" ><a<#else> ><a href='${linkUrl}page=${i-1}'</#if>>${i}</a></li>
 			</#list>
-		<li class="next <#if page.pageNo+1 == page.pageCount>disabled" ><a<#else> "><a href="${page.nextUrl}"</#if>><i class="fa fa-angle-right">下一页</i></a></li>
+		<li class="next <#if page.last>disabled" ><a<#else> "><a href="${linkUrl}page=${page.number+1}"</#if>><i class="fa fa-angle-right">下一页</i></a></li>
 	</ul>
 </#if>
 </#macro>
@@ -208,6 +207,15 @@
 	</div>
 	<script type="text/javascript">
 		    $(function ()  {
+                String.prototype.endWith=function(s){
+                    if(s==null||s==""||this.length==0||s.length>this.length)
+                        return false;
+                    if(this.substring(this.length-s.length)==s)
+                        return true;
+                    else
+                        return false;
+                    return true;
+                }
 		        $('#ms__uploadPic_${inputName}').swfupload({
 		            upload_url: "${ctx}/api/upload",
 		            post_params:{"uploadPath":"/${path}","maxSize":"${maxSize}","allowedFile":"${filetype}","allowedFile":""},
@@ -254,17 +262,21 @@
 				    var item = $('#ms__uploadPic_${inputName} ul li#' + file.id);
 				    item.find('div.displayimg').html('<img src="${ctx}' + serverData + '" />');
 				    item.find('span.front-cover').html('<a class="btn btn-xs red tooltips " data-original-title="点击删除图片"><i class="glyphicon glyphicon-trash"></i></a>');
-				    $('#${inputName}').val($('#${inputName}').val() + serverData + "|");
+				    if($('#${inputName}').val() == "") {
+						$('#${inputName}').val(serverData);
+					} else {
+                        $('#${inputName}').val($('#${inputName}').val() + "|" + serverData);
+                    }
 				    $('#ms__uploadPic_${inputName} ul li#' + file.id + ' span.front-cover').bind('click', function () {
 				        $('#ms__uploadPic_${inputName} ul li#' + file.id + '').slideUp('fast');
 				        var swfu = $.swfupload.getInstance('#ms__uploadPic_${inputName}');
 				        var stats = swfu.getStats();
 				        stats.successful_uploads--;
 				        swfu.setStats(stats);
-				        if (  $('#${inputName}').val().indexOf("|")>0) {
-				        	$('#${inputName}').val($('#${inputName}').val().replace(serverData + "|", ""));
-				        } else {
-				        	$('#${inputName}').val("|"+$('#${inputName}').val().replace(serverData + "|", ""));
+                        $('#${inputName}').val($('#${inputName}').val().replace(serverData, ""));
+                        var imgs = $('#${inputName}').val();
+				        if (imgs != null && imgs != "" && imgs.substring(imgs.length-1) == "|") {
+                            $('#${inputName}').val(imgs.substring(0, imgs.length - 1));
 				        }
 				        $('#ms__uploadPic_${inputName} ul li#' + file.id).remove();
 				    });
