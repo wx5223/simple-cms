@@ -44,6 +44,11 @@ public class CommonController {
         return "/index";
     }
 
+    @RequestMapping("/login")
+    public String login() {
+        return "/login";
+    }
+
     @RequestMapping("/buy_first")
     public String buy_first() {
         return "/buy_first";
@@ -89,7 +94,6 @@ public class CommonController {
 
     private Specification<Product> getSpecification(final String keyword, final Long recommend, final Long hot, final String ids){
         return new Specification<Product>() {
-            @Override
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<Predicate>();
                 if(StringUtils.isNotBlank(keyword)){
