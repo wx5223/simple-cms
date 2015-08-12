@@ -124,10 +124,12 @@ hr.header-after {
     line-height: 35px;
 }
 .error_page .error {
-    width: 100%;
+    margin: auto;
     position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
     font-size: 200px;
-    top: 40%;
+    width: 100%;
+    height: 125px;
     opacity: 0.5;
     filter: alpha(opacity=0.5);
     color: #999;
