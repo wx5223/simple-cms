@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>望远镜|望远镜论坛|望远镜品牌|望远镜专卖|望远镜知识|望远镜价格|望远镜选购|望远镜的倍率|望远镜参数|望远镜网|望远镜是谁发明的|望远镜原理|天文望远镜|瞄准镜|哈勃望远镜|军用望远镜|射电望远镜|熊猫望远镜|夜视望远镜</title>
-<meta name="keywords" content="望远镜|望远镜论坛|望远镜品牌|望远镜专卖|望远镜知识|望远镜价格|望远镜选购|望远镜的倍率|望远镜参数|望远镜网|望远镜是谁发明的|望远镜原理|天文望远镜|瞄准镜|哈勃望远镜|军用望远镜|射电望远镜|熊猫望远镜|夜视望远镜|尼康望远镜|佳能防抖望远镜|鹰眼望远镜||单筒望远镜|双筒望远镜|观鸟望远镜"/>
-<meta name="description" content="本网站介绍望远镜知识，发布望远镜价格，是望远镜专卖的望远镜网站，望远镜品牌齐全，使您望远镜选购无忧，只销售正规望远镜，望远镜倍率真实，望远镜参数准确，不仅介绍望远镜是谁发明的，而且全面介绍哈勃望远镜，射电望远镜和天文望远镜的望远镜知识，介绍军用望远镜和普通双筒望远镜，单筒望远镜的区别，更有夜视望远镜和夜视仪，熊猫望远镜和西光望远镜的优缺点的比较，设有专业的望远镜论坛供您讨论"/>
 
 <!-- pace & custom cover -->
 <link rel="stylesheet" href="${ctx}/resources/pace/pace1.0.2_cover.css" />
@@ -98,6 +95,7 @@
           $("[data-toggle='popover']").popover({html:true});
   })
   var websiteId= "0" ;
+  window.UEDITOR_HOME_URL = "${ctx}/resources/ueditor/";
 </script>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>

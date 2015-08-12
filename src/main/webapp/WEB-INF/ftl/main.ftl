@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<#include "/include/meta.ftl"/> <!--调用head内样式信息-->
+<#include "/include/meta.ftl"/>
+    <title>后台管理系统</title>
 </head>
 <style>
     .sidebar {
@@ -114,12 +115,12 @@
 <div class="navbar navbar-duomi navbar-static-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="${ctx}/api/home" id="logo">后台管理系统
+            <a class="navbar-brand" href="${ctx}/api/main" id="logo">后台管理系统
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="javascript:void(0)">admin</a></li>
-            <li><a href="#">退出</a></li>
+            <li class="active"><a href="javascript:void(0)">${Session.user.username}</a></li>
+            <li><a href="${ctx}/api/logout">退出</a></li>
         </ul>
     </div>
 </div>
@@ -127,18 +128,24 @@
     <div class="sidebar">
         <ul id="main-nav" class="nav nav-tabs nav-stacked" style="">
             <li<#-- class="active"-->>
-                <a href="#">
+                <a href="${ctx}/main.jsp" target="mainFrame">
+                    <i class="glyphicon glyphicon-th-large"></i>
+                    后台首页
+                </a>
+            </li>
+            <li<#-- class="active"-->>
+                <a href="${ctx}/index" target="_blank">
                     <i class="glyphicon glyphicon-th-large"></i>
                     首页
                 </a>
             </li>
             <li>
-                <a href="#product" class="nav-header collapsed" data-toggle="collapse">
+                <a href="#product" class="nav-header" data-toggle="collapse">
                     <i class="glyphicon glyphicon-cog"></i>
                     产品管理
                     <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
                 </a>
-                <ul id="product" class="nav nav-list collapse secondmenu" style="height: 0px;">
+                <ul id="product" class="nav nav-list collapse secondmenu in">
                     <li>
                         <a href="${ctx}/api/product/list" target="mainFrame">
                         <i class="glyphicon glyphicon-list"></i>
@@ -196,7 +203,7 @@
         </ul>
     </div>
     <div class="content">
-        <iframe src="${ctx}/index" id="iframepage" name="mainFrame" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" width="100%" style="height:expression(document.body.clientHeight-200);" onLoad="iFrameHeight()"></iframe>
+        <iframe src="${ctx}/main.jsp" id="iframepage" name="mainFrame" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" width="100%" onLoad="iFrameHeight()"></iframe>
     </div>
 </div>
 
@@ -208,7 +215,7 @@
         var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
         if(ifm != null && subWeb != null) {
             ifm.height = subWeb.body.scrollHeight;
-            ifm.width = subWeb.body.scrollWidth;
+            //ifm.width = subWeb.body.scrollWidth;
         }
     }
 </script>

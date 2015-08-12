@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<#include "/include/meta.ftl"/> <!--调用head内样式信息-->
+<#include "/include/meta.ftl"/>
+<#include "/include/title.ftl"/>
 </head>
 <style>
 	.product_img {
@@ -71,7 +72,7 @@
     }
     .list-item>.name {
         float: left;
-        width: 66.6666666666667%;
+        width: 70%;
         text-align: left;
         font-size: 12px;
         padding-left: 10px;
@@ -81,7 +82,7 @@
     }
     .list-item>.count {
         float: right;
-        width: 25%;
+        width: 20%;
         text-align: right;
         font-size: 12px;
     }
@@ -168,7 +169,7 @@
                         <#list list.children as childList>
                             <li class="list-item">
                                 <input id="type_id_${childList.id}" data-name="${childList.id}" type="checkbox" class="check" value="${childList.id}">
-                                <label for="type_id_${childList.id}" class="name">&nbsp;&nbsp;&nbsp;&nbsp;${childList.name}</label>
+                                <label for="type_id_${childList.id}" class="name">${childList.name}</label>
                                 <label for="type_id_${childList.id}" class="count">${childList.count}</label>
                             </li>
                         </#list>

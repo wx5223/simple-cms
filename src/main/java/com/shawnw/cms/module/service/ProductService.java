@@ -2,17 +2,27 @@ package com.shawnw.cms.module.service;
 
 import com.shawnw.cms.module.dao.ProductRepository;
 import com.shawnw.cms.module.dao.ProductTypeRepository;
+import com.shawnw.cms.module.domain.Product;
 import com.shawnw.cms.module.domain.ProductType;
 import com.shawnw.cms.module.vo.ProductTypeCount;
 import com.shawnw.cms.module.vo.ProductTypeTree;
 import com.shawnw.cms.utils.SimpleCache;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,18 +39,85 @@ public class ProductService {
 
     private static ProductTypeRepository productTypeRepository;
     private static ProductRepository productRepository;
-    public static List<ProductTypeTree> productTypeTreeList = null;
-    private static SimpleCache<List<ProductTypeTree>> productTypeTreeCache = new SimpleCache<List<ProductTypeTree>>();
+    private static SimpleCache simpleCache = new SimpleCache();
+    private Pageable top20pager = new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "updateTime"));
 
     public static List<ProductTypeTree> getProductTypeTreeList() {
-        List<ProductTypeTree> productTypeTreeList = productTypeTreeCache.get("productTypeTree");
+        List<ProductTypeTree> productTypeTreeList = (List<ProductTypeTree>) simpleCache.get("productTypeTree");
         if (productTypeTreeList == null) {
             List<ProductType> productTypeList = productTypeRepository.findAll();
             Map<Long, ProductTypeCount> countMap = getProductTypeCount();
             productTypeTreeList = handleTree(productTypeList, countMap);
-            productTypeTreeCache.put("productTypeTree", productTypeTreeList, 2*60*60l);
+            simpleCache.put("productTypeTree", productTypeTreeList, 2*60*60l);
         }
         return productTypeTreeList;
+    }
+
+    public Page<Product> getProductRecommendPage() {
+        Page<Product> productRecommendPage = (Page<Product>) simpleCache.get("productRecommendPage");;
+        if (productRecommendPage == null) {
+            productRecommendPage = productRepository.findAll(getSpecification(null, 1l, null, null), top20pager);
+            simpleCache.put("productRecommendPage", productRecommendPage, 2*60*60l);
+        }
+        return productRecommendPage;
+    }
+
+    public Page<Product> getProductHotPage() {
+        Page<Product> productHotPage = (Page<Product>) simpleCache.get("productHotPage");;
+        if (productHotPage == null) {
+            productHotPage = productRepository.findAll(getSpecification(null, null, 1l, null), top20pager);
+            simpleCache.put("productHotPage", productHotPage, 2*60*60l);
+        }
+        return productHotPage;
+    }
+
+    public static Specification<Product> getSpecification(final String keyword, final Long recommend, final Long hot, final String ids){
+        return new Specification<Product>() {
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicate = new ArrayList<Predicate>();
+                if(StringUtils.isNotBlank(keyword)){
+                    String keywordLike = keyword;
+                    if (keyword.indexOf("%") < 0) {
+                        keywordLike = "%" + keyword + "%";
+                    }
+                    predicate.add(cb.like(root.get("title").as(String.class), keywordLike));
+                }
+                if (recommend != null && hot != null) {
+                    predicate.add(cb.or(
+                            cb.equal(root.get("recommend").as(Long.class), recommend),
+                            cb.equal(root.get("hot").as(Long.class), hot)
+                    ));
+                } else if (recommend != null) {
+                    predicate.add(cb.equal(root.get("recommend").as(Long.class), recommend));
+                } else if (hot != null) {
+                    predicate.add(cb.equal(root.get("hot").as(Long.class), hot));
+                }
+                if (StringUtils.isNotBlank(ids)) {
+                    String[] idsArray = ids.split(",");
+                    CriteriaBuilder.In in = cb.in(root.get("typeId"));
+                    for (String idStr : idsArray) {
+                        Long id = null;
+                        try {
+                            id = Long.parseLong(idStr);
+                            in.value(id);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    predicate.add(in);
+                }
+                /*if (searchArticle.getRecTimeEnd()!=null){
+                    predicate.add(cb.lessThanOrEqualTo(root.get("recommendTime").as(Date.class), searchArticle.getRecTimeEnd()));
+                }
+                if (StringUtils.isNotBlank(searchArticle.getNickname())){
+                    //两张表关联查询
+                    Join<Article,User> userJoin = root.join(root.getModel().getSingularAttribute("user",User.class),JoinType.LEFT);
+                    predicate.add(cb.like(userJoin.get("nickname").as(String.class), "%" + searchArticle.getNickname() + "%"));
+                }*/
+                Predicate[] pre = new Predicate[predicate.size()];
+                return query.where(predicate.toArray(pre)).getRestriction();
+            }
+        };
     }
 
     public List<ProductTypeTree> getTreeList() {
@@ -93,6 +170,7 @@ public class ProductService {
         }
         return treeList;
     }
+
     @Autowired
     public void setProductTypeRepository(ProductTypeRepository productTypeRepository) {
         ProductService.productTypeRepository = productTypeRepository;

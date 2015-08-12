@@ -44,6 +44,7 @@ public class CommonApiController {
         if (StringUtils.isBlank(kaptchaExpected) || !kaptchaExpected.equals(code)) {
             return ResultMsg.msg(-1l, "验证码不正确");
         }
+        request.getSession().removeAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         User user = userRepository.findByAccount(account);
         if (user == null) {
             return ResultMsg.msg(-2l, "账号不正确");
@@ -61,6 +62,12 @@ public class CommonApiController {
             return ResultMsg.success("成功");
         }
         return ResultMsg.msg(-10l, "账号、密码不正确");
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("user");
+        return "redirect:/login";
     }
 
     @RequestMapping("/encode/password")

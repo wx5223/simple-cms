@@ -175,7 +175,7 @@
                 <div class="col-md-3  col-xs-4">
                     <label id="menuBtn" role="button" data-toggle="dropdown" class="form-control"
                            onClick="showMenu(); return false;">
-                        <span id="treeShowName" style="float: left;width: 85px;">${(product.typeName)!"请选择"}</span><span class="caret" style="float: right;margin-top: 8px;"></span>
+                        <span id="treeShowName" style="float: left;width: 200px;">${(product.typeName)!"请选择"}</span><span class="caret" style="float: right;margin-top: 8px;"></span>
                     </label>
                     <input type="hidden" name="typeId" value="${(product.typeId)!""}"/>
                     <input type="hidden" name="typeName" value="${(product.typeName)!""}"/>

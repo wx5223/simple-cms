@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
 <#include "/include/meta.ftl"/>
+    <style>
+        .panel-default {
+            height: 500px;
+            overflow: auto;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid link-style">
@@ -126,12 +132,12 @@
     }
 
     function onClick(e, treeId, treeNode) {
-        console.log(treeNode);
         selectedNode = treeNode;
         $("input[name='id']").val(treeNode.id);
         $("input[name='name']").val(treeNode.name);
         $("input[name='pId']").val(treeNode.pId);
         $("textarea[name='description']").text(treeNode.description);
+        $("input[name='order']").val(treeNode.order);
         var pNode = treeNode.getParentNode();
         if(pNode != null) {
             $("input[name='pName']").val(pNode.name);
@@ -148,6 +154,7 @@
         $("input[name='name']").val('');
         $("input[name='pId']").val(selectedNode.pId);
         $("textarea[name='description']").text('');
+        $("input[name='order']").val('0');
         var pNode = selectedNode.getParentNode();
         if(pNode != null) {
             $("input[name='pName']").val(pNode.name);
@@ -164,6 +171,7 @@
         $("input[name='name']").val('');
         $("input[name='pId']").val(selectedNode.id);
         $("textarea[name='description']").text('');
+        $("input[name='order']").val('0');
         $("input[name='pName']").val(selectedNode.name);
     }
 

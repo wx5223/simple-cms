@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<#include "/include/meta.ftl"/> <!--调用head内样式信息-->
+<#include "/include/meta.ftl"/>
+<#include "/include/title.ftl"/>
 </head>
 <style>
     .partner-picture {

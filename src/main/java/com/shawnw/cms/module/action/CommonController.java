@@ -39,8 +39,15 @@ public class CommonController {
     private ProductRepository productRepository;
     @Autowired
     private ProductTypeRepository productTypeRepository;
+    private Pageable pager = new PageRequest(1, 20, new Sort(Sort.Direction.DESC, "updateTime"));
     @RequestMapping({"/", "/index"})
     public String index() {
+        //推荐
+        Page<Product> productPageRecommend = null;
+        productPageRecommend = productRepository.findAll(getSpecification(null, 1l, 0l, null), pager);
+        //热门
+        Page<Product> productPageHot = null;
+        productPageHot = productRepository.findAll(getSpecification(null, 1l, 0l, null), pager);
         return "/index";
     }
 

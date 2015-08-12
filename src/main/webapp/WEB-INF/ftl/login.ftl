@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<#include "/include/meta.ftl"/> <!--调用head内样式信息-->
+<#include "/include/meta.ftl"/>
+<link type="text/css" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+<link type="text/css" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/assets/css/font-awesome.min.css" rel="stylesheet" />
+<!--[if IE 7]>
+<link rel="stylesheet" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/assets/css/font-awesome-ie7.min.css">
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery.ui.1.10.0.ie.css"/>
+<![endif]-->
+<script src="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/assets/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
 <style>
     .light-login .widget-box {
         padding: 1px 1px 0;
@@ -131,7 +140,7 @@
     }
     .form-control {
         display: block;
-        width: 100%;
+        /*width: 100%;*/
         height: 34px;
         padding: 6px 12px;
         font-size: 14px;
@@ -185,6 +194,9 @@
     .width-35 {
         width: 35% !important;
     }
+    .width-40 {
+        width: 40% !important;
+    }
     .width-100 {
         width: 100% !important;
     }
@@ -220,39 +232,52 @@
                                         请输入登录信息
                                     </h4>
                                     <div class="space-6"></div>
-                                    <form>
+                                    <form action="${ctx}/api/login">
                                         <fieldset>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="account" placeholder="账号">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" name="password" placeholder="密码">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control width-35" name="code" placeholder="验证码">
+                                                <span class="width-35 pull-right">
+                                                    <img id="code" src="${ctx}/code.jpg"/>
+                                                </span>
+                                            </div>
+                                            <#--
                                             <label class="block clearfix width-100">
                                                 <span class="block input-icon input-icon-right">
-                                                    <input type="text" class="form-control"
+                                                    <input type="text" class="form-control" name="account"
                                                            placeholder="账号"/>
                                                     <i class="ace-icon fa fa-user"></i>
                                                 </span>
                                             </label>
                                             <label class="block clearfix width-100">
                                                 <span class="block input-icon input-icon-right">
-                                                    <input type="password" class="form-control"
+                                                    <input type="password" class="form-control" name="password"
                                                            placeholder="密码"/>
                                                     <i class="ace-icon fa fa-lock"></i>
                                                 </span>
                                             </label>
                                             <label class="block clearfix width-100">
                                                 <span class="block input-icon input-icon-right width-35 pull-left">
-                                                    <input type="password" class="form-control"
+                                                    <input type="password" class="form-control" name="code"
                                                            placeholder="验证码"/>
                                                     <i class="ace-icon fa fa-lock"></i>
                                                 </span>
                                                 <span class="block pull-right width-35">
                                                     <img id="code" src="${ctx}/code.jpg"/>
                                                 </span>
-                                            </label>
+                                            </label>-->
                                             <div class="space-6"></div>
                                             <div class="clearfix">
                                                 <!-- <label class="inline">
                                                     <input type="checkbox" class="ace" />
                                                     <span class="lbl"> 记住我</span>
                                                 </label> -->
-                                                <button id="login-btn" type="button"
+                                                <button id="login-btn" type="submit"
                                                         class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
                                                     <span class="bigger-110">登录</span>
@@ -270,23 +295,84 @@
         </div>
     </div>
 </div>
-
+<!--static dialog-->
+<div id="dialog-message" title="提示"><p></p></div>
+<!--end static dialog-->
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function ($) {
+        $('form').bootstrapValidator({
+            excluded: [':disabled'],
+            fields: {
+                title: {
+                    validators: {
+                        notEmpty: {}
+                    }
+                },
+                account: {
+                    validators: {
+                        notEmpty: {}
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {}
+                    }
+                },
+                code: {
+                    validators: {
+                        notEmpty: {}
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            // Prevent submit form
+            e.preventDefault();
+            // Get the form instance
+            var $form = $(e.target);
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function (data) {
+                if(data.ret != 0) {
+                    $("#dialog-message p").text(data.msg);
+                    $("#dialog-message").dialog( "open" );
+                    $('#login-btn').removeAttr('disabled');
+                    code();
+                } else {
+                    location.href = '${ctx}/api/main';
+                }
+            });
+        });
+        $("#dialog-message").dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            buttons: {
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+/*
         $('#login-btn').click(function () {
             $.post('${ctx}/api/login',{
                 account:'',
                 password:'',
                 code:''
             }, function(data){
-
+                if(data.ret != 0) {
+                    $("#dialog-message p").text(data.msg);
+                    $("#dialog-message").dialog( "open" );
+                } else {
+                    location.href = '${ctx}/api/main';
+                }
             });
-        });
-        $('#code').click(function () {//生成验证码
-            $(this).hide().attr('src', '${ctx}/code.jpg?' + Math.floor(Math.random()*100) ).fadeIn();
-            event.cancelBubble=true;
-        });
+        });*/
+        function code() {//生成验证码
+            $('#code').hide().attr('src', '${ctx}/code.jpg?' + Math.floor(Math.random()*100) ).fadeIn();
+        }
+        $('#code').click(code);
     });
 </script>
 </body>
