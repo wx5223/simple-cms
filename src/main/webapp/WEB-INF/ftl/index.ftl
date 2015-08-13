@@ -68,7 +68,7 @@
         <#if (productService.productRecommendPage.content)?has_content>
             <#list productService.productRecommendPage.content as list>
                 <div name="${(list.id)!0}" class="product-picture">
-                    <img src="${ctx}/${list.thumbnail!}" class="small" style="display: inline;"/>
+                    <img src="${list.thumbnail!}" class="small" style="display: inline;"/>
                     <h5>${list.title}</h5>
                     <h5><a href="${ctx}/products?type=${list.typeId}">${list.typeName}</a></h5>
                 </div>
@@ -83,7 +83,7 @@
     <#if (productService.productHotPage.content)?has_content>
         <#list productService.productHotPage.content as list>
             <div name="${(list.id)!0}" class="product-picture">
-                <img src="${ctx}/${list.thumbnail!}" class="small" style="display: inline;"/>
+                <img src="${list.thumbnail!}" class="small" style="display: inline;"/>
                 <h5>${list.title}</h5>
                 <h5><a href="${ctx}/products?type=${list.typeId}">${list.typeName}</a></h5>
             </div>

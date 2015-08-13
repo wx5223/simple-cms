@@ -20,59 +20,13 @@
 <#--width\height:编辑器的宽度高度-->
 <#--content:初始化内容-->
 <#macro smallUedit inputName width height content>
-
 	    <script type="text/plain" id="editor_${inputName}" name="${inputName}">${content?default('')}</script>
-	    
-		  <div class="editor-bottom-bar">
-		    当前已输入
-		    <span class="char_count">
-		      0
-		    </span>
-		    个字符, 您还可以输入
-		    <span class="char_remain">
-		      80000
-		    </span>
-		    个字符。
-		  </div>    
-	    <style>
-		.editor-bottom-bar {
-			white-space: nowrap;
-			border: 1px solid #ccc;
-			line-height: 20px;
-			font-size: 12px;
-			text-align: right;
-			margin-right: 5px;
-			color: #aaa;
-			border-top: 0;
-			width:  ${width}px;
-		}
-		</style>
-	
 		<script type="text/javascript">
-				var charLimit = 80000;
 		    	window.editor_${inputName} = new UE.ui.Editor({
 					initialFrameWidth : ${width},
 					initialFrameHeight : ${height}
 				});
 				window.editor_${inputName}.render("editor_${inputName}");
-		    	function computeChar() {
-		    	
-					var len = editor_${inputName}.getContent().length;
-					if (len > charLimit) {
-						$(".editor-bottom-bar").html("<span style='color:red;'>你输入的字符个数（"
-								+ len + "）已经超出最大允许值！</span>")
-					} else {
-						$(".editor-bottom-bar").html("当前已输入<span class='char_count'>" + len
-								+ "</span>个字符, 您还可以输入<span class='char_remain'>"
-								+ (charLimit - len) + "</span>个字符。")
-					}
-				}
-				
-				window.editor_${inputName}.addListener("keyup", function(type, evt) {
-					computeChar()
-				})
-				
-				
 		</script>
 </#macro>
 
@@ -164,7 +118,72 @@
 </#macro>
 
 
-
+<#macro ueUploadImg inputName img>
+<script type="text/plain" id="upload_ue_${inputName}"></script>
+<div id="upload_div_${inputName}">
+    <style>
+        .msUploadImgs{margin: 0;padding: 0;list-style: none;}
+        .msUploadImgs li {list-style:none;float: left;text-align: center;border: 1px solid #F3F3F3;margin: 8px; width:100px;}
+        .msUploadImgs img {width:100%; }
+        .msUploadImgs li span {cursor: pointer;}
+        .divUploader{clear:both}
+        .product-picture {
+            width: 200px;
+            height: 140px;
+            position: relative;
+            cursor: pointer;
+        }
+        .product-picture .img-remove{
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            cursor: pointer;
+        }
+        .product-picture .img-remove:hover {
+            color: #337ab7;
+        }
+        .product-picture img {
+            -webkit-border-radius: 0;
+            border-radius: 0;
+            border: 2px solid #eee;
+            width: 200px;
+            height: 140px;
+        }
+    </style>
+    <div class="product-picture">
+        <span class="glyphicon glyphicon-remove img-remove" onclick="clearImage${inputName}()"></span>
+        <img id="${inputName}-preview" src="<#if img!="">${img}</#if>" class="small" style="display: inline;" onclick="upImage${inputName}()"/>
+        <input type="hidden" size="100" name="${inputName}" id="${inputName}" value="${img?default('')}" />
+    </div>
+</div>
+<script type="text/javascript">
+var _editor = UE.getEditor('upload_ue_${inputName}');
+_editor.ready(function () {
+    _editor.setDisabled();
+    _editor.hide();
+    _editor.addListener('beforeInsertImage', function (t, arg) {
+        $("#${inputName}").attr("value", arg[0].src);
+        $("#${inputName}-preview").attr("src", arg[0].src);
+    });
+    /*_editor.addListener('afterUpfile', function (t, arg) {
+        $("#file").attr("value", _editor.options.filePath + arg[0].url);
+    });*/
+});
+function upImage${inputName}() {
+    var myImage = _editor.getDialog("insertimage");
+    myImage.open();
+}
+function clearImage${inputName}() {
+    $("#${inputName}").attr("value", '');
+    $("#${inputName}-preview").attr("src", '');
+}
+/*
+function upFiles${inputName}() {
+    var myFiles = _editor.getDialog("attachment");
+    myFiles.open();
+}*/
+</script>
+</#macro>
 <#--上传控件-->
 <#--path:上传路径-->
 <#--inputName:name值-->

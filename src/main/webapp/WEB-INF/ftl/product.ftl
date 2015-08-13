@@ -15,7 +15,7 @@
 <div class="container body-container">
     <div class="row">
         <div class="col-sm-8"><h2>${(product.title)!}</h2></div>
-        <div class="col-sm-4"><img class="product_img" src="${ctx}/${(product.thumbnail)!}"></div>
+        <div class="col-sm-4"><img class="product_img" src="${(product.thumbnail)!}"></div>
     </div>
     <hr class="margin-updown-20">
     <div class="row">

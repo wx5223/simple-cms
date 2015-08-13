@@ -42,35 +42,35 @@
             <p><span style="font-size: large"><br>
 &nbsp;<strong>24小时到帐,第二天发货</strong></span></p>
             <p><span style="font-size: large"><strong><br>
-            </strong>&nbsp;3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/4F102414978.gif"></span></p>
+            </strong>&nbsp;3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
             <p><span style="font-size: large">中国邮政储蓄：<strong>6221&nbsp;8810&nbsp;0001&nbsp;6523&nbsp;920</strong>&nbsp;<br>
 持卡人：<strong>聂正奎</strong>&nbsp;&nbsp;&nbsp; 一分钟到帐，当天发货</span></p>
             <p><span style="font-size: large">&nbsp;<br>
-&nbsp;4.&nbsp;&nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/39102414500.gif"></span></p>
+&nbsp;4.&nbsp;&nbsp; </span></p>
             <p><span style="font-size: large">交通银行太平洋卡卡号:<strong>601428&nbsp; 8091&nbsp; 2839&nbsp;201</strong>&nbsp;<br>
 持卡人:<strong>聂正奎</strong>&nbsp;&nbsp;&nbsp; 一分钟到帐，当天发货&nbsp;</span></p>
             <p><span style="font-size: large"><br>
-&nbsp;5.&nbsp;&nbsp;&nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/A5102414741.gif"></span></p>
+&nbsp;5.&nbsp;&nbsp;&nbsp; </span></p>
             <p><span style="font-size: large">招商银行一卡通卡号: <strong>0010 2831 6662</strong> <br>
 持卡人:<strong>聂正奎</strong>&nbsp;&nbsp;&nbsp;&nbsp; 一分钟到帐，当天发货</span></p>
             <p><span style="font-size: large"><br>
-&nbsp;6.&nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/24102414854.gif"></span></p>
+&nbsp;6.&nbsp; </span></p>
             <p><span style="font-size: large">建设银行龙卡卡号：<strong>4367 4200 1120 0117 156</strong>&nbsp; <br>
 持卡人:<strong>聂正奎</strong> 一分钟到帐，当天发货</span></p>
             <p><span style="font-size: large"><br>
-&nbsp;7.&nbsp;&nbsp;&nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/3C102414862.gif"></span></p>
+&nbsp;7.&nbsp;&nbsp;&nbsp; </span></p>
             <p><span style="font-size: large">工商银行电子汇款卡号：<strong>9558 8202 0000 8704 423</strong>&nbsp; <br>
 持卡人:<strong>聂正奎</strong>&nbsp;&nbsp;&nbsp; 一分钟到帐，当天发货&nbsp;</span></p>
             <p><span style="font-size: large"><br>
-&nbsp;8.&nbsp; &nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/66102414878.gif"></span></p>
+&nbsp;8.&nbsp; &nbsp; </span></p>
             <p><span style="font-size: large">农业银行金惠卡卡号：<strong>6228 4800 1046 000 3113</strong>&nbsp;<br>
 持卡人：<strong>聂正奎</strong>&nbsp; 一分钟到帐，当天发货</span></p>
             <p><span style="font-size: large"><br>
-&nbsp; 9.&nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/D3102414774.gif"></span></p>
+&nbsp; 9.&nbsp; </span></p>
             <p><span style="font-size: large">中国银行长城卡卡号：<strong>4563 5101 0086 0693 542</strong><br>
 持卡人：<strong>聂正奎</strong>&nbsp; 一分钟到帐，当天发货&nbsp;</span></p>
             <p><span style="font-size: large">&nbsp;</span></p>
-            <p><span style="font-size: large">10.&nbsp; <img border="0" hspace="0" alt="" align="baseline" twffan="done" src="/uploadfile/201203/22/EE102414196.jpg"></span></p>
+            <p><span style="font-size: large">10.&nbsp; </span></p>
             <p><span style="font-size: large">上海浦东发展银行卡号：6225 2204 8205 0382</span></p>
             <p><span style="font-size: large">持卡人：<strong>聂正奎</strong>&nbsp; 一分钟到帐，当天发货</span></p>
             <p><span style="font-size: large"><br>

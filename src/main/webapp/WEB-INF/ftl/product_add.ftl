@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <#include "/include/meta.ftl"/>
-
+<#include "/include/ueditor.ftl"/>
 </head>
 <style>
     .container {
@@ -166,7 +166,8 @@
                 <label class="col-md-2 control-label col-xs-3">缩略图:</label>
 
                 <div class="col-md-4 uploadImg  col-xs-6"><#--${article.basicThumbnails?default('')}-->
-					    <@uploadImg path="/upload/article" inputName="thumbnail" size="1" filetype="" msg="" imgs="${(product.thumbnail)!}" maxSize="1"/>
+					    <#--<@uploadImg path="/upload/article" inputName="thumbnail" size="1" filetype="" msg="" imgs="${(product.thumbnail)!}" maxSize="1"/>-->
+                    <@ueUploadImg inputName="thumbnail" img="${(product.thumbnail)!}"/>
                 </div>
             </div>
 
