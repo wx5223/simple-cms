@@ -14,7 +14,7 @@
         display: inline-block;
         text-align: center;
         cursor: pointer;
-        border: 2px solid #fafafa;
+        border: 2px solid #fff;
     }
     .product-picture:hover {
         background-color: #eee;
@@ -31,7 +31,7 @@
 </style>
 <body>
 <#include "/include/navbar.ftl"/>
-<div class="container">
+<div class="container body-container">
     <div class="jumbotron">
         <h1>南京皇拓</h1>
         <p class="lead">华东最大的望远镜，夜视仪，手电筒 天文望远镜等光学产品的批发商。是德国蔡司，德国视得乐，美国博士能，日本尼康等品牌在国内的授权代理。南京公司地址：中山东路198号龙台国际大厦1218室，公司在北京设有分公司，负责大北方地区的销售，北京公司地址：北京市朝阳区大屯路2号南沙滩36号楼2204室。公司主要业务是望远镜和夜视仪手电筒 等光学器材的批发，目前已开始在淘宝商城和京东商城 亚马逊 等商家平台开展网络的零售业务。因为专业，所以前景广阔。</p>
