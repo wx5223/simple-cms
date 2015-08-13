@@ -32,7 +32,7 @@ public class CommonApiController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping({"/", "/main"})
+    @RequestMapping({"", "/", "/main"})
     public String index(ModelMap model) {
         return "/main";
     }
@@ -84,12 +84,28 @@ public class CommonApiController {
         return ResultMsg.success("成功", "password", passwordEncoder);
     }
 
+    @RequestMapping("/password")
+    public String password() {
+        return "/password";
+    }
+
     @RequestMapping("/update/password")
     @ResponseBody
-    public ResultMsg updatePassword(String password, HttpServletRequest request) {
+    public ResultMsg updatePassword(String oldPassword, String password, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return ResultMsg.msg(-1l, "用户未登录");
+        }
+        String oldPasswordEncoder = null;
+        try {
+            oldPasswordEncoder = Encoder.md5Base64(oldPassword);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (user.getPassword() == null || !user.getPassword().equals(oldPasswordEncoder)) {
+            return ResultMsg.msg(-2l, "原密码不正确");
         }
         String passwordEncoder = null;
         try {
@@ -98,6 +114,33 @@ public class CommonApiController {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        }
+        user.setPassword(passwordEncoder);
+        userRepository.save(user);
+        return ResultMsg.success("成功");
+    }
+
+    @RequestMapping("/update/user/password")
+    @ResponseBody
+    public ResultMsg updateUserPassword(String account, String password, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return ResultMsg.msg(-1l, "用户未登录");
+        }
+        if (user.getId() != 1l) {
+            return ResultMsg.msg(-2l, "无权限");
+        }
+        String passwordEncoder = null;
+        try {
+            passwordEncoder = Encoder.md5Base64(password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        user = userRepository.findByAccount(account);
+        if (user == null) {
+            return ResultMsg.msg(-3l, "用户账号不存在");
         }
         user.setPassword(passwordEncoder);
         userRepository.save(user);

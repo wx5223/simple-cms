@@ -98,6 +98,7 @@
             <mvc:mapping path="/api/**" />
             <mvc:mapping path="/resources/ueditor/**" />
 			<mvc:exclude-mapping path="/api/login"/>
+			<mvc:exclude-mapping path="/resources/ueditor/jsp/upload/**"/>
             <bean class="com.shawnw.cms.core.filter.LoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

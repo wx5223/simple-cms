@@ -93,13 +93,14 @@
 <script>
     //有关下拉列表的函数
     function beforeClick(treeId, treeNode) {
-        var check = (treeNode);
-        //if (!check) alert("只能选择城市...");
-        return check;
+        if(treeNode.isParent == false) {
+            return true;
+        }
+        treeObj.expandNode(treeNode);
+        return false;
     }
 
     function onClick(e, treeId, treeNode) {
-        console.log(treeNode);
         $("input[name='typeId']").val(treeNode.id);
         $("input[name='typeName']").val(treeNode.name);
         $("#treeShowName").html(treeNode.name);
@@ -247,7 +248,7 @@
                 title: {
                     validators: {
                         notEmpty: {},
-                        stringLength: {max: 50}
+                        stringLength: {max: 150}
                     }
                 },
                 brief: {

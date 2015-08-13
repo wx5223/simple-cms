@@ -210,6 +210,7 @@ ul.list {
 }
 .list-item>.name_bold {
     font-weight: bold;
+    width: 90%;
 }
 .list-item>.count {
     float: right;
@@ -262,4 +263,16 @@ ul.list {
 }
 .display-none {
     display: none;
+}
+.width-5 {
+    width: 5%;
+}
+.width-10 {
+    width: 10%;
+}
+.width-20 {
+    width: 20%;
+}
+.width-30 {
+    width: 30%;
 }

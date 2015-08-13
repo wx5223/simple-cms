@@ -47,15 +47,17 @@
                     <!--表格栏目属性 开始-->
                     <thead>
                     <tr>
-                        <th class="col-md-1 text-center">
+                        <th class="width-5 text-center">
                             <input type="checkbox" id="allCheck" value="全选" data-original-title="点击全选"
                                    data-toggle="tooltip">
                         </th>
-                        <th class="col-md-1 text-center">ID</th>
-                        <th class="col-md-2 text-center">类型</th>
-                        <th class="col-md-4 text-left">标题</th>
-                        <th class="col-md-3 text-center">描述</th>
-                        <th class="col-md-1 text-center">操作</th>
+                        <th class="width-5 text-center">ID</th>
+                        <th class="width-20 text-center">类型</th>
+                        <th class="width-30 text-left">标题</th>
+                        <th class="width-20 text-center">描述</th>
+                        <th class="width-5 text-center">推荐</th>
+                        <th class="width-5 text-center">热门</th>
+                        <th class="width-10 text-center">操作</th>
                     </tr>
                     </thead>
                     <!--表格栏目属性 结束-->
@@ -92,6 +94,8 @@
 		            	</span>
                             </td>
                             <td class="text-center">${(list.brief)!}</td>
+                            <td class="text-center"><#if (list.recommend)?? &&list.recommend=1>是</#if></td>
+                            <td class="text-center"><#if (list.hot)?? && list.hot=1>是</#if></td>
                             <td class="text-center">
                                 <a class="btn btn-xs red tooltips del-btn deleteArticle" data-toggle="tooltip"
                                    data-original-title="删除" data-id="${(list.id)!0}">

@@ -159,7 +159,21 @@
                         </a>
                     </li>
                 </ul>
-
+            </li>
+            <li>
+                <a href="#user" class="nav-header" data-toggle="collapse">
+                    <i class="glyphicon glyphicon-cog"></i>
+                    用户管理
+                    <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+                </a>
+                <ul id="user" class="nav nav-list collapse secondmenu in">
+                    <li>
+                        <a href="${ctx}/api/password" target="mainFrame">
+                            <i class="glyphicon glyphicon-edit"></i>
+                            修改密码
+                        </a>
+                    </li>
+                </ul>
             </li>
             <#--<li>
                 <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">

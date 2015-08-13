@@ -8,6 +8,7 @@
     .product-picture {
         display: block;
         float: left;
+        width: 206px;
         height: 250px;
         margin: 10px 10px;
         display: inline-block;

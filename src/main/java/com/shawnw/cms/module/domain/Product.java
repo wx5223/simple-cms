@@ -12,7 +12,7 @@ public class Product {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(length = 100)
+    @Column(length = 200)
     private String title;
     private String thumbnail;
     private Long typeId;
@@ -21,6 +21,7 @@ public class Product {
     private String brief;
     @Lob
     private String content;
+    @Column(updatable = false)
     private Date createTime;
     private Date updateTime;
     private Long recommend;

@@ -32,14 +32,14 @@
                 </li>
                 <#list productService.treeList as list>
                     <li class="list-item">
-                        <input id="type_id_${list.id}" data-name="${list.id}" type="checkbox" class="check" value="${list.id}">
+                        <input id="type_id_${list.id}" data-level="1" data-id="${list.id}" type="checkbox" class="check" value="${list.id}">
                         <label for="type_id_${list.id}" class="name name_bold">${list.name}</label>
-                        <label for="type_id_${list.id}" class="count">${list.count}</label>
+                        <#--<label for="type_id_${list.id}" class="count"></label>-->
                         <#if list.children?has_content>
                         <ul class="list">
                         <#list list.children as childList>
                             <li class="list-item">
-                                <input id="type_id_${childList.id}" data-name="${childList.id}" type="checkbox" class="check" value="${childList.id}">
+                                <input id="type_id_${childList.id}" data-level="2" data-parent-id="${list.id}" data-id="${childList.id}" type="checkbox" class="check" value="${childList.id}">
                                 <label for="type_id_${childList.id}" class="name">${childList.name}</label>
                                 <label for="type_id_${childList.id}" class="count">${childList.count}</label>
                             </li>
@@ -140,7 +140,7 @@
     page=0;
     var check = function(event){
         event.stopPropagation();
-        var checkId = $(this).attr("data-name");
+        var checkId = $(this).attr("data-id");
         $("#" + checkId).click();
     };
     var itemclick = function() {
@@ -224,15 +224,15 @@
                 }
                 var tip = "";
                 if(obj.recommend != null) {
-                    tip+="<a href=\"javascript:void(0)\" data-name=\"type_id_recommend\" class=\"btn btn-info btn-xs check-link\" >推荐</a>";
+                    tip+="<a href=\"javascript:void(0)\" data-id=\"type_id_recommend\" class=\"btn btn-info btn-xs check-link\" >推荐</a>";
                 }
                 if(obj.hot != null) {
-                    tip+="&nbsp;<a href=\"javascript:void(0)\" data-name=\"type_id_hot\" class=\"btn btn-success btn-xs check-link\">热门</a>";
+                    tip+="&nbsp;<a href=\"javascript:void(0)\" data-id=\"type_id_hot\" class=\"btn btn-success btn-xs check-link\">热门</a>";
                 }
                 var div = "<div><div name="+obj.id+" class=\"row product-list-item\"><div class=\"col-md-2 col-xs-3\">" +
                         "<img src=\""+obj.thumbnail+"\" class=\"product-thumbnail\"></div>" +
                         "<div class=\"col-md-7 col-xs-6 product-main\"><div>"+obj.title+"</div><div>"+
-                        "<a href=\"javascript:void(0)\" data-name=\"type_id_"+obj.typeId+"\" class=\"check-link\">"+typeName+"</a></div><span>"+brief+"</span></div>"+
+                        "<a href=\"javascript:void(0)\" data-id=\"type_id_"+obj.typeId+"\" class=\"check-link\">"+typeName+"</a></div><span>"+brief+"</span></div>"+
                         "<div class=\"col-xs-3 text-right\"><p>"+updateTime+"</p>"+tip+"</div></div></div>";
                 $("#product-listing").append($(div));
                 $('a.check-link').unbind('click').click(check);
@@ -252,10 +252,20 @@
     $(function() {
         $('input:checkbox').change(function () {
             var id = $(this).attr("id");
+            var isCheck = $(this).is(":checked");
             if(id == 'type_id_0') {
-                $('input:checkbox[data-name]').removeAttr("checked");
+                $('input:checkbox[data-id]').prop('checked', false);
             } else if(id != 'type_id_recommend'&& id != 'type_id_hot') {
-                $("#type_id_0").removeAttr("checked");
+                $("#type_id_0").prop('checked', false);
+                var level = $(this).attr("data-level");
+                var dataId = $(this).attr("data-id");
+                if(level == 1) {//parent
+                    if(isCheck) {
+                        $('input:checkbox[data-parent-id="'+dataId+'"]').prop("checked", true);
+                    } else {
+                        $('input:checkbox[data-parent-id="'+dataId+'"]').prop('checked', false);
+                    }
+                }
             }
             query();
         });
@@ -267,7 +277,10 @@
         /*$("div.product-list-item").click(itemclick);
         $('a.check-link').click(check);*/
         var type_id = '${(RequestParameters.type)!"0"}';
-        $('#type_id_'+type_id).attr('checked', 'checked');
+        $('#type_id_'+type_id).prop('checked', 'checked');
+        if($('#type_id_'+type_id).attr('data-level')==1) {
+            $('input:checkbox[data-parent-id="'+type_id+'"]').prop('checked', true);
+        }
         query();
     });
 </script>
