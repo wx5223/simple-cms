@@ -8,7 +8,7 @@
 
 <!-- pace & custom cover -->
 <link rel="stylesheet" href="${ctx}/resources/pace/pace1.0.2_cover.css" />
-<link rel="stylesheet" href="http://cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" />
+<link rel="stylesheet" href="${ctx}/resources/cdn/pace/1.0.2/themes/blue/pace-theme-minimal.css" />
 <script type="text/javascript">
     paceOptions = {
         ajax: false, // disabled
@@ -25,22 +25,22 @@
 </script>
 
 <!-- Bootstrap -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="${ctx}/resources/cdn/bootstrap/3.3.4/css/bootstrap.min.css">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<script src="${ctx}/resources/cdn/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="${ctx}/resources/cdn/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="${ctx}/resources/cdn/jquery/1.11.2/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<link href="http://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet"/>
-<script src="http://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-<script src="http://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/language/zh_CN.js"></script>
+<script src="${ctx}/resources/cdn/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link href="${ctx}/resources/cdn/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet"/>
+<script src="${ctx}/resources/cdn/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script src="${ctx}/resources/cdn/jquery.bootstrapvalidator/0.5.3/js/language/zh_CN.js"></script>
 <#--<script src="http://cdn.bootcss.com/jquery-validate/1.13.1/jquery.validate.min.js"></script>-->
 
 <script type="text/javascript" src="${ctx}/resources/jquery/zTree_v3/jquery.ztree.all-3.5.min.js"></script>
@@ -87,9 +87,4 @@
       $("[data-toggle='popover']").popover({html:true});
   });
 </script>
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 <link href="${ctx}/resources/css/common.css" rel="stylesheet"/>

@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Shawn on 2015/6/30.
  */
 @Entity
-@Table(name = "T_PRODUCT_TYPE")
+@Table(name = "t_product_type")
 public class ProductType {
     @Id
     @GeneratedValue

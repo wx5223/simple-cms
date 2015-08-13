@@ -2,15 +2,15 @@
 <html lang="zh-CN">
 <head>
 <#include "/include/meta.ftl"/>
-<link type="text/css" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
-<link type="text/css" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/assets/css/font-awesome.min.css" rel="stylesheet" />
+<link type="text/css" href="${ctx}/resources/cdn/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+<link type="text/css" href="${ctx}/resources/cdn/jquery-ui-bootstrap/0.5pre/assets/css/font-awesome.min.css" rel="stylesheet" />
 <!--[if IE 7]>
-<link rel="stylesheet" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/assets/css/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="${ctx}/resources/cdn/jquery-ui-bootstrap/0.5pre/assets/css/font-awesome-ie7.min.css">
 <![endif]-->
 <!--[if lt IE 9]>
-<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery.ui.1.10.0.ie.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/resources/cdn/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery.ui.1.10.0.ie.css"/>
 <![endif]-->
-<script src="http://cdn.bootcss.com/jquery-ui-bootstrap/0.5pre/assets/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
+<script src="${ctx}/resources/cdn/jquery-ui-bootstrap/0.5pre/assets/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
 <style>
     .light-login .widget-box {
         padding: 1px 1px 0;

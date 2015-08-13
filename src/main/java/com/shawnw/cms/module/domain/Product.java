@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Shawn on 2015/6/1.
  */
 @Entity
-@Table(name = "T_PRODUCT")
+@Table(name = "t_product")
 public class Product {
     @Id
     @GeneratedValue

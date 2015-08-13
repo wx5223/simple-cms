@@ -9,7 +9,7 @@
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>500</title>
 
-	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cdn/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common.css">
 </head>
 <body class='b_error'>
